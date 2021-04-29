@@ -263,14 +263,91 @@
     </nav>
     <!-- Header -->
     <!-- Header -->
-    <div class="header bg-primary pb-6">
+    <div class="header pb-6">
       <div class="container-fluid">
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-white d-inline-block mb-0">Stok Bahan</h6>
+              <h6 class="h2 text-dark d-inline-block mb-0">Stok Bahan</h6>
             </div>
           </div>
+          <a href="tambahstok.html"><button type="submit" class="btn btn-primary mb-3"><i class="ni ni-box-2"></i> Tambah Stok</button></a>
+          <!-- Dark table -->
+            <div class="row">
+              <div class="col">
+                <div class="card bg-default shadow">
+                  <div class="card-header bg-transparent border-0">
+                    <h3 class="text-white mb-0">Data Stok Bahan</h3>
+                  </div> 
+                  <div class="table-responsive">
+                    <table class="table align-items-center table-dark table-flush">
+                      <thead class="thead-dark">
+                        <tr>
+                          <th scope="col" class="sort" data-sort="name">#</th>
+                          <th scope="col" class="sort" data-sort="name">ID Bahan</th>
+                          <th scope="col" class="sort" data-sort="status">Nama</th>
+                          <th scope="col" class="sort" data-sort="status">Jumlah</th>
+                          <th scope="col" class="sort" data-sort="status">Aksi</th>
+                        </tr>
+                      </thead>
+                      <tbody class="list">
+                        <tr>
+                          <td>1.</td>
+                          <td>ST-001</td>
+                          <td>Beras</td>
+                          <td>200 Kg</td>
+                          <td>
+                            <a href=""><i class="far fa-edit text-white"></i></a> |
+                            <a href=""><i class="far fa-trash-alt text-white"></i></a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>2.</td>
+                          <td>ST-002</td>
+                          <td>Teh Botol</td>
+                          <td>2 Kerat</td>
+                          <td>
+                            <a href=""><i class="far fa-edit text-white"></i></a> |
+                            <a href=""><i class="far fa-trash-alt text-white"></i></a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>3.</td>
+                          <td>ST-003</td>
+                          <td>Ayam</td>
+                          <td>6 Kg</td>
+                          <td>
+                            <a href=""><i class="far fa-edit text-white"></i></a> |
+                            <a href=""><i class="far fa-trash-alt text-white"></i></a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>4.</td>
+                          <td>ST-004</td>
+                          <td>Air Mineral</td>
+                          <td>10 Dus</td>
+                          <td>
+                            <a href=""><i class="far fa-edit text-white"></i></a> |
+                            <a href=""><i class="far fa-trash-alt text-white"></i></a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>5.</td>
+                          <td>ST-005</td>
+                          <td>Jeruk Limau</td>
+                          <td>2 Kg</td>
+                          <td>
+                            <a href=""><i class="far fa-edit text-white"></i></a> |
+                            <a href=""><i class="far fa-trash-alt text-white"></i></a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- akhir tabel -->
         </div>
       </div>
     </div>

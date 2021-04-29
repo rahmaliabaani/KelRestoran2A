@@ -21,7 +21,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Menu Restaurant</title>
+  <title>Tambah supplier</title>
   <!-- Favicon -->
   <link rel="icon" href="../assets/img/brand/favicon.png" type="image/png">
   <!-- Fonts -->
@@ -56,7 +56,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="menu.html">
+              <a class="nav-link" href="menu.html">
                 <i class="ni ni-collection text-primary"></i>
                 <span class="nav-link-text">Menu Restaurant</span>
               </a>
@@ -68,7 +68,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="supplier.html">
+              <a class="nav-link active" href="supplier.html">
                 <i class="ni ni-delivery-fast text-primary"></i>
                 <span class="nav-link-text">Supplier</span>
               </a>
@@ -268,110 +268,76 @@
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-dark d-inline-block mb-0">Menu</h6>
+              <h6 class="h2 text-dark d-inline-block mb-0">Supplier</h6>
             </div>
           </div>
-          <a href="tambahmenu.html"><button type="submit" class="btn btn-primary mb-3"><i class="ni ni-collection"></i> Tambah Menu</button></a>
-            <!-- Dark table -->
-            <div class="row">
-              <div class="col">
-                <div class="card bg-default shadow">
-                  <div class="card-header bg-transparent border-0">
-                    <h3 class="text-white mb-0">Menu</h3>
+          <!-- transaksi -->
+            <div class="col-xl-10 order-xl-1 ml--3">
+              <div class="card">
+                <div class="card-header">
+                  <div class="row align-items-center">
+                    <div class="col-10">
+                      <h3 class="mb-0">Data Supplier</h3>
+                    </div>
                   </div>
-                  <div class="table-responsive">
-                    <table class="table align-items-center table-dark table-flush">
-                      <thead class="thead-dark">
-                        <tr>
-                          <th scope="col" class="sort" data-sort="name">#</th>
-                          <th scope="col" class="sort" data-sort="name">ID Menu</th>
-                          <th scope="col" class="sort" data-sort="status">Nama</th>
-                          <th scope="col" class="sort" data-sort="budget">Porsi</th>
-                          <th scope="col" class="sort" data-sort="status">Harga </th>
-                          <th scope="col" class="sort" data-sort="budget">Status menu</th>
-                          <th scope="col" class="sort" data-sort="budget">Foto</th>
-                          <th scope="col" class="sort" data-sort="budget">Aksi</th>
-                        </tr>
-                      </thead>
-                      <tbody class="list">
-                        <tr>
-                          <td>1.</td>
-                          <td>M-001</td>
-                          <td>Pecel ayam</td>
-                          <td>1</td>
-                          <td>25.000</td>
-                          <td>Ada</td>
-                          <td><img src="../assets/img/pecelayam.jpg" alt=""></td>
-                          <td>
-                            <a href=""><i class="far fa-edit text-white"></i></a> |
-                            <a href=""><i class="far fa-trash-alt text-white"></i></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>2.</td>
-                          <td>M-002</td>
-                          <td>Ayam Bakar</td>
-                          <td>1</td>
-                          <td>25.000</td>
-                          <td>Ada</td>
-                          <td><img src="../assets/img/ayambakar.jpg" alt=""></td>
-                          <td>
-                            <a href=""><i class="far fa-edit text-white"></i></a> |
-                            <a href=""><i class="far fa-trash-alt text-white"></i></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>3.</td>
-                          <td>M-003</td>
-                          <td>Ayam Geprek</td>
-                          <td>1</td>
-                          <td>35.000</td>
-                          <td>Ada</td>
-                          <td><img src="../assets/img/ayamgeprek.jpg" alt=""></td>
-                          <td>
-                            <a href=""><i class="far fa-edit text-white"></i></a> |
-                            <a href=""><i class="far fa-trash-alt text-white"></i></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>4.</td>
-                          <td>M-004</td>
-                          <td>Gulai Ayam</td>
-                          <td>1</td>
-                          <td>25.000</td>
-                          <td>Ada</td>
-                          <td><img src="../assets/img/gulaiayam.jpg" alt=""></td>
-                          <td>
-                            <a href=""><i class="far fa-edit text-white"></i></a> |
-                            <a href=""><i class="far fa-trash-alt text-white"></i></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>5.</td>
-                          <td>M-005</td>
-                          <td>Soto Ayam</td>
-                          <td>1</td>
-                          <td>30.000</td>
-                          <td>Ada</td>
-                          <td><img src="../assets/img/sotoayam.jpg" alt=""></td>
-                          <td>
-                            <a href=""><i class="far fa-edit text-white"></i></a> |
-                            <a href=""><i class="far fa-trash-alt text-white"></i></a>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+                </div>
+                <div class="card-body">
+                  <form action="supplier.html">
+                    <div class="pl-lg-2">
+                      <div class="row">
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="id">ID_supplier</label>
+                            <input type="text" id="id" class="form-control">
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="nama">Nama_supplier</label>
+                            <input type="text" id="nama" class="form-control">
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="alamat">Alamat</label>
+                            <textarea rows="1" class="form-control" id="alamat"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="notelp">No_Telpon</label>
+                            <input type="number" id="notelp" class="form-control">
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="email">Email</label>
+                            <input type="email" id="email" class="form-control">
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="jenissupplier">Jenis Supplier</label>
+                            <input type="number" id="jenissupplier" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                      <button type="submit" class="btn btn-primary">Simpan</button>
+                    <hr class="my-4" />
+                  </form>
                 </div>
               </div>
             </div>
-            <!-- akhir tabel -->
+            <!-- akhir -->
         </div>
       </div>
     </div>
     <!-- Page content -->
     <div class="container-fluid mt--6">
-      <!-- Footer -->
+    <!-- Footer -->
       <footer class="footer pt-0">
         <div class="row align-items-center justify-content-lg-between">
           <div class="col-lg-6">
@@ -391,7 +357,8 @@
   <script src="../assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
   <script src="../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
   <!-- Optional JS -->
-  <script src="../assets/vendor/clipboard/dist/clipboard.min.js"></script>
+  <script src="../assets/vendor/chart.js/dist/Chart.min.js"></script>
+  <script src="../assets/vendor/chart.js/dist/Chart.extension.js"></script>
   <!-- Argon JS -->
   <script src="../assets/js/argon.js?v=1.2.0"></script>
 </body>
