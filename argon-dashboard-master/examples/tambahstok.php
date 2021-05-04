@@ -21,7 +21,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Menu Restaurant</title>
+  <title>Tambah Stok</title>
   <!-- Favicon -->
   <link rel="icon" href="../assets/img/brand/favicon.png" type="image/png">
   <!-- Fonts -->
@@ -32,6 +32,8 @@
   <!-- Page plugins -->
   <!-- Argon CSS -->
   <link rel="stylesheet" href="../assets/css/argon.css?v=1.2.0" type="text/css">
+  <!-- my css -->
+  <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 
 <body>
@@ -50,43 +52,43 @@
           <!-- Nav items -->
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="beranda.html">
+              <a class="nav-link" href="beranda.php">
                 <i class="ni ni-tv-2 text-primary"></i>
                 <span class="nav-link-text">Beranda</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="menu.html">
+              <a class="nav-link" href="menu.php">
                 <i class="ni ni-collection text-primary"></i>
                 <span class="nav-link-text">Menu Restaurant</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="stok.html">
+              <a class="nav-link active" href="stok.php">
                 <i class="ni ni-box-2 text-primary"></i>
                 <span class="nav-link-text">Stok Bahan</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="supplier.html">
+              <a class="nav-link" href="supplier.php">
                 <i class="ni ni-delivery-fast text-primary"></i>
                 <span class="nav-link-text">Supplier</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pegawai.html">
+              <a class="nav-link" href="pegawai.php">
                 <i class="ni ni-single-02 text-primary"></i>
                 <span class="nav-link-text">Pegawai</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="transaksi.html">
+              <a class="nav-link" href="transaksi.php">
                 <i class="ni ni-cart text-primary"></i>
                 <span class="nav-link-text">Transaksi</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pemasukan_pengeluaran.html">
+              <a class="nav-link" href="pemasukan_pengeluaran.php">
                 <i class="ni ni-bullet-list-67 text-primary"></i>
                 <span class="nav-link-text">Pemasukan dan Pengeluaran</span>
               </a>
@@ -99,42 +101,42 @@
               <div class="collapse" id="tables">
                 <ul class="nav nav-collapse">
                   <li class="nav-item">
-                    <a href="laporanmenu.html" class="nav-link">
+                    <a href="laporanmenu.php" class="nav-link">
                       <span class="nav-link-text">Data Menu</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanpegawai.html" class="nav-link">
+                    <a href="laporanpegawai.php" class="nav-link">
                       <span class="nav-link-text">Data Pegawai</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanstok.html" class="nav-link">
+                    <a href="laporanstok.php" class="nav-link">
                       <span class="nav-link-text">Data Stok Bahan</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporansupplier.html" class="nav-link">
+                    <a href="laporansupplier.php" class="nav-link">
                       <span class="nav-link-text">Data Supplier</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanpemasukan.html" class="nav-link">
+                    <a href="laporanpemasukan.php" class="nav-link">
                       <span class="nav-link-text">Data Pemasukan</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanpengeluaran.html" class="nav-link">
+                    <a href="laporanpengeluaran.php" class="nav-link">
                       <span class="nav-link-text">Data Pengeluaran</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporantransaksi.html" class="nav-link">
+                    <a href="laporantransaksi.php" class="nav-link">
                       <span class="nav-link-text">Data Transaksi</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanomset.html" class="nav-link">
+                    <a href="laporanomset.php" class="nav-link">
                       <span class="nav-link-text">Data Omset</span>
                     </a>
                   </li>
@@ -268,110 +270,58 @@
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-dark d-inline-block mb-0">Menu</h6>
+              <h6 class="h2 text-dark d-inline-block mb-0">Stok Bahan</h6>
             </div>
           </div>
-          <a href="tambahmenu.html"><button type="submit" class="btn btn-primary mb-3"><i class="ni ni-collection"></i> Tambah Menu</button></a>
-            <!-- Dark table -->
-            <div class="row">
-              <div class="col">
-                <div class="card bg-default shadow">
-                  <div class="card-header bg-transparent border-0">
-                    <h3 class="text-white mb-0">Menu</h3>
+          <!-- transaksi -->
+            <div class="col-xl-10 order-xl-1 ml--3">
+              <div class="card">
+                <div class="card-header">
+                  <div class="row align-items-center">
+                    <div class="col-10">
+                      <h3 class="mb-0">Data Stok </h3>
+                    </div>
                   </div>
-                  <div class="table-responsive">
-                    <table class="table align-items-center table-dark table-flush">
-                      <thead class="thead-dark">
-                        <tr>
-                          <th scope="col" class="sort" data-sort="name">#</th>
-                          <th scope="col" class="sort" data-sort="name">ID Menu</th>
-                          <th scope="col" class="sort" data-sort="status">Nama</th>
-                          <th scope="col" class="sort" data-sort="budget">Porsi</th>
-                          <th scope="col" class="sort" data-sort="status">Harga </th>
-                          <th scope="col" class="sort" data-sort="budget">Status menu</th>
-                          <th scope="col" class="sort" data-sort="budget">Foto</th>
-                          <th scope="col" class="sort" data-sort="budget">Aksi</th>
-                        </tr>
-                      </thead>
-                      <tbody class="list">
-                        <tr>
-                          <td>1.</td>
-                          <td>M-001</td>
-                          <td>Pecel ayam</td>
-                          <td>1</td>
-                          <td>25.000</td>
-                          <td>Ada</td>
-                          <td><img src="../assets/img/pecelayam.jpg" alt=""></td>
-                          <td>
-                            <a href=""><i class="far fa-edit text-white"></i></a> |
-                            <a href=""><i class="far fa-trash-alt text-white"></i></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>2.</td>
-                          <td>M-002</td>
-                          <td>Ayam Bakar</td>
-                          <td>1</td>
-                          <td>25.000</td>
-                          <td>Ada</td>
-                          <td><img src="../assets/img/ayambakar.jpg" alt=""></td>
-                          <td>
-                            <a href=""><i class="far fa-edit text-white"></i></a> |
-                            <a href=""><i class="far fa-trash-alt text-white"></i></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>3.</td>
-                          <td>M-003</td>
-                          <td>Ayam Geprek</td>
-                          <td>1</td>
-                          <td>35.000</td>
-                          <td>Ada</td>
-                          <td><img src="../assets/img/ayamgeprek.jpg" alt=""></td>
-                          <td>
-                            <a href=""><i class="far fa-edit text-white"></i></a> |
-                            <a href=""><i class="far fa-trash-alt text-white"></i></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>4.</td>
-                          <td>M-004</td>
-                          <td>Gulai Ayam</td>
-                          <td>1</td>
-                          <td>25.000</td>
-                          <td>Ada</td>
-                          <td><img src="../assets/img/gulaiayam.jpg" alt=""></td>
-                          <td>
-                            <a href=""><i class="far fa-edit text-white"></i></a> |
-                            <a href=""><i class="far fa-trash-alt text-white"></i></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>5.</td>
-                          <td>M-005</td>
-                          <td>Soto Ayam</td>
-                          <td>1</td>
-                          <td>30.000</td>
-                          <td>Ada</td>
-                          <td><img src="../assets/img/sotoayam.jpg" alt=""></td>
-                          <td>
-                            <a href=""><i class="far fa-edit text-white"></i></a> |
-                            <a href=""><i class="far fa-trash-alt text-white"></i></a>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+                </div>
+                <div class="card-body">
+                  <form action="stok.php">
+                    <div class="pl-lg-2">
+                      <div class="row">
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="id">ID Stok</label>
+                            <input type="text" id="id" class="form-control">
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="nama">Nama</label>
+                            <input type="text" id="nama" class="form-control">
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="jumlah">Jumlah</label>
+                            <input type="text" id="jumlah" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                  </form>
+                    <a href="stok.php" class="batal">
+                      <button type="batal" class="btn btn-default">Batal</button>
+                    </a>
                 </div>
               </div>
             </div>
-            <!-- akhir tabel -->
+            <!-- akhir -->
         </div>
       </div>
     </div>
     <!-- Page content -->
     <div class="container-fluid mt--6">
-      <!-- Footer -->
+    <!-- Footer -->
       <footer class="footer pt-0">
         <div class="row align-items-center justify-content-lg-between">
           <div class="col-lg-6">
@@ -391,7 +341,8 @@
   <script src="../assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
   <script src="../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
   <!-- Optional JS -->
-  <script src="../assets/vendor/clipboard/dist/clipboard.min.js"></script>
+  <script src="../assets/vendor/chart.js/dist/Chart.min.js"></script>
+  <script src="../assets/vendor/chart.js/dist/Chart.extension.js"></script>
   <!-- Argon JS -->
   <script src="../assets/js/argon.js?v=1.2.0"></script>
 </body>

@@ -1,3 +1,7 @@
+<?php 
+  require 'functions.php';
+  $stok = query("SELECT * FROM stok");
+?>
 <!--
 =========================================================
 * Argon Dashboard - v1.2.0
@@ -21,7 +25,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Beranda</title>
+  <title>Laporan</title>
   <!-- Favicon -->
   <link rel="icon" href="../assets/img/brand/favicon.png" type="image/png">
   <!-- Fonts -->
@@ -32,6 +36,8 @@
   <!-- Page plugins -->
   <!-- Argon CSS -->
   <link rel="stylesheet" href="../assets/css/argon.css?v=1.2.0" type="text/css">
+  <!-- my css -->
+  <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 
 <body>
@@ -50,91 +56,91 @@
           <!-- Nav items -->
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" href="beranda.html">
+              <a class="nav-link" href="beranda.php">
                 <i class="ni ni-tv-2 text-primary"></i>
                 <span class="nav-link-text">Beranda</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="menu.html">
+              <a class="nav-link" href="menu.php">
                 <i class="ni ni-collection text-primary"></i>
                 <span class="nav-link-text">Menu Restaurant</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="stok.html">
+              <a class="nav-link" href="stok.php">
                 <i class="ni ni-box-2 text-primary"></i>
                 <span class="nav-link-text">Stok Bahan</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="supplier.html">
+              <a class="nav-link" href="supplier.php">
                 <i class="ni ni-delivery-fast text-primary"></i>
                 <span class="nav-link-text">Supplier</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pegawai.html">
+              <a class="nav-link" href="pegawai.php">
                 <i class="ni ni-single-02 text-primary"></i>
                 <span class="nav-link-text">Pegawai</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="transaksi.html">
+              <a class="nav-link" href="transaksi.php">
                 <i class="ni ni-cart text-primary"></i>
                 <span class="nav-link-text">Transaksi</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pemasukan_pengeluaran.html">
+              <a class="nav-link" href="pemasukan_pengeluaran.php">
                 <i class="ni ni-bullet-list-67 text-primary"></i>
                 <span class="nav-link-text">Pemasukan dan Pengeluaran</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-toggle="collapse" href="#tables">
+              <a class="nav-link active" data-toggle="collapse" href="#tables">
                 <i class="ni ni-folder-17 text-primary"></i>
                 <span class="nav-link-text">Laporan</span>
               </a>
               <div class="collapse" id="tables">
                 <ul class="nav nav-collapse">
                   <li class="nav-item">
-                    <a href="laporanmenu.html" class="nav-link">
+                    <a href="laporanmenu.php" class="nav-link">
                       <span class="nav-link-text">Data Menu</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanpegawai.html" class="nav-link">
+                    <a href="laporanpegawai.php" class="nav-link">
                       <span class="nav-link-text">Data Pegawai</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanstok.html" class="nav-link">
+                    <a href="laporanstok.php" class="nav-link">
                       <span class="nav-link-text">Data Stok Bahan</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporansupplier.html" class="nav-link">
+                    <a href="laporansupplier.php" class="nav-link">
                       <span class="nav-link-text">Data Supplier</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanpemasukan.html" class="nav-link">
+                    <a href="laporanpemasukan.php" class="nav-link">
                       <span class="nav-link-text">Data Pemasukan</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanpengeluaran.html" class="nav-link">
+                    <a href="laporanpengeluaran.php" class="nav-link">
                       <span class="nav-link-text">Data Pengeluaran</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporantransaksi.html" class="nav-link">
+                    <a href="laporantransaksi.php" class="nav-link">
                       <span class="nav-link-text">Data Transaksi</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanomset.html" class="nav-link">
+                    <a href="laporanomset.php" class="nav-link">
                       <span class="nav-link-text">Data Omset</span>
                     </a>
                   </li>
@@ -263,247 +269,62 @@
     </nav>
     <!-- Header -->
     <!-- Header -->
-    <div class="header bg-primary pb-6">
+    <div class="header pb-6">
       <div class="container-fluid">
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-white d-inline-block mb-0">Beranda</h6>
+              <h6 class="h2 text-dark d-inline-block mb-0">Laporan</h6>
             </div>
           </div>
-          <!-- Card stats -->
-          <div class="row">
-            <div class="col-xl-3 col-md-6">
-              <div class="card card-stats">
-                <!-- Card body -->
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">Total Hasil</h5>
-                      <span class="h2 font-weight-bold mb-0">3.000.000</span>
-                    </div>
-                    <div class="col-auto">
-                      <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
-                        <i class="ni ni-active-40"></i>
-                      </div>
-                    </div>
+      <!-- cetak Stok -->
+          <button class="btn btn-primary mb-3"><i class="fas fa-print"></i> Cetak Laporan</button>
+          <!-- Dark table -->
+            <div class="row tabel-gelap">
+              <div class="col">
+                <div class="card bg-default shadow">
+                  <div class="card-header bg-transparent border-0">
+                    <h3 class="text-white mb-0">Data Stok Bahan</h3>
                   </div>
-                  <p class="mt-3 mb-0 text-sm">
-                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                    <span class="text-nowrap">Satu bulan lalu</span>
-                  </p>
+                  <div class="table-responsive">
+                    <table class="table align-items-center table-dark table-flush">
+                      <thead class="thead-dark">
+                        <tr>
+                          <th scope="col" class="sort" data-sort="name">#</th>
+                          <th scope="col" class="sort" data-sort="budget">ID Stok</th>
+                          <th scope="col" class="sort" data-sort="status">Nama bahan</th>
+                          <th scope="col" class="sort" data-sort="completion">Jumlah</th>
+                          <th scope="col" class="sort" data-sort="completion">Satuan</th>
+                        </tr>
+                      </thead>
+                      <tbody class="list">
+                        <?php $i = 1; ?>
+                        <?php foreach ($stok as $s) { ?>
+                          <tr>
+                            <td><?php echo $i++; ?></td>
+                            <td><?php echo $s['id_stok']; ?></td>
+                            <td><?php echo $s['nama_bahan']; ?></td>
+                            <td><?php echo $s['jumlah']; ?></td>
+                            <td><?php echo $s['satuan']; ?></td>
+                          </tr>
+                        <?php } ?>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="col-xl-3 col-md-6">
-              <div class="card card-stats">
-                <!-- Card body -->
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">Pegawai</h5>
-                      <span class="h2 font-weight-bold mb-0">8</span>
-                    </div>
-                    <div class="col-auto">
-                      <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
-                        <i class="ni ni-chart-pie-35"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="mt-3 mb-0 text-sm">
-                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                    <span class="text-nowrap">Satu bulan lalu</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-md-6">
-              <div class="card card-stats">
-                <!-- Card body -->
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">Keuntungan</h5>
-                      <span class="h2 font-weight-bold mb-0">1.000.000</span>
-                    </div>
-                    <div class="col-auto">
-                      <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
-                        <i class="ni ni-money-coins"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="mt-3 mb-0 text-sm">
-                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                    <span class="text-nowrap">Satu bulan lalu</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-md-6">
-              <div class="card card-stats">
-                <!-- Card body -->
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">Transaksi</h5>
-                      <span class="h2 font-weight-bold mb-0">10</span>
-                    </div>
-                    <div class="col-auto">
-                      <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
-                        <i class="ni ni-chart-bar-32"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="mt-3 mb-0 text-sm">
-                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                    <span class="text-nowrap">Satu bulan lalu</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+      <!-- akhir tabel -->
         </div>
       </div>
     </div>
     <!-- Page content -->
     <div class="container-fluid mt--6">
-      <div class="row">
-        <div class="col-xl-8">
-          <div class="card">
-            <div class="card-header border-0">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h3 class="mb-0">Transaksi</h3>
-                </div>
-              </div>
-            </div>
-            <div class="table-responsive">
-              <!-- Projects table -->
-              <table class="table align-items-center table-flush">
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col" class="sort" data-sort="name">#</th>
-                    <th scope="col" class="sort" data-sort="budget">No Trans</th>
-                    <th scope="col" class="sort" data-sort="status">ID Pegawai</th>
-                    <th scope="col" class="sort" data-sort="status">Tanggal</th>
-                    <th scope="col" class="sort" data-sort="status">Nama Pelanggan</th>
-                    <th scope="col" class="sort" data-sort="completion">Total Bayar</th>
-                    <th scope="col" class="sort" data-sort="status">Status Pemesanan</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1.</td>
-                    <td>TR-001</td>
-                    <td>P-001</td>
-                    <td>15-04-2021</td>
-                    <td>Sitta</td>
-                    <td>Rp. 50000</td>
-                    <td>Selesai</td>
-                  </tr>
-                  <tr>
-                    <td>2.</td>
-                    <td>TR-002</td>
-                    <td>P-002</td>
-                    <td>15-04-2021</td>
-                    <td>Rahma</td>
-                    <td>Rp. 20000</td>
-                    <td>Selesai</td>
-                  </tr>
-                  <tr>
-                    <td>3.</td>
-                    <td>TR-003</td>
-                    <td>P-003</td>
-                    <td>15-04-2021</td>
-                    <td>Bunga</td>
-                    <td>Rp. 30000</td>
-                    <td>Selesai</td>
-                  </tr>
-                  <tr>
-                    <td>4.</td>
-                    <td>TR-004</td>
-                    <td>P-004</td>
-                    <td>15-04-2021</td>
-                    <td>Sari</td>
-                    <td>Rp. 35000</td>
-                    <td>Selesai</td>
-                  </tr>
-                  <tr>
-                    <td>5.</td>
-                    <td>TR-005</td>
-                    <td>P-005</td>
-                    <td>15-04-2021</td>
-                    <td>Nadia</td>
-                    <td>Rp. 15000</td>
-                    <td>Selesai</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-4">
-          <div class="card">
-            <div class="card-header border-0">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h3 class="mb-0">Stok Bahan</h3>
-                </div>
-              </div>
-            </div>
-            <div class="table-responsive">
-              <!-- Projects table -->
-              <table class="table align-items-center table-flush">
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col" class="sort" data-sort="name">#</th>
-                    <th scope="col" class="sort" data-sort="name">ID Bahan</th>
-                    <th scope="col" class="sort" data-sort="status">Nama</th>
-                    <th scope="col" class="sort" data-sort="status">Jumlah</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1.</td>
-                    <td>ST-001</td>
-                    <td>Beras</td>
-                    <td>200 Kg</td>
-                  </tr>
-                  <tr>
-                    <td>2.</td>
-                    <td>ST-002</td>
-                    <td>Teh Botol</td>
-                    <td>2 Kerat</td>
-                  </tr>
-                  <tr>
-                    <td>3.</td>
-                    <td>ST-003</td>
-                    <td>Ayam</td>
-                    <td>6 Kg</td>
-                  </tr>
-                  <tr>
-                    <td>4.</td>
-                    <td>ST-004</td>
-                    <td>Air Mineral</td>
-                    <td>10 Dus</td>
-                  </tr>
-                  <tr>
-                    <td>5.</td>
-                    <td>ST-005</td>
-                    <td>Jeruk Limau</td>
-                    <td>2 Kg</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
       <!-- Footer -->
       <footer class="footer pt-0">
         <div class="row align-items-center justify-content-lg-between">
           <div class="col-lg-6">
-           <!--  <div class="copyright text-center  text-lg-left  text-muted">
+            <!-- <div class="copyright text-center  text-lg-left  text-muted">
               &copy; 2020 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
             </div> -->
           </div>

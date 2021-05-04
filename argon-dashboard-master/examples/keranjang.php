@@ -21,7 +21,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Laporan</title>
+  <title>Transaksi</title>
   <!-- Favicon -->
   <link rel="icon" href="../assets/img/brand/favicon.png" type="image/png">
   <!-- Fonts -->
@@ -50,91 +50,91 @@
           <!-- Nav items -->
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="beranda.html">
+              <a class="nav-link" href="beranda.php">
                 <i class="ni ni-tv-2 text-primary"></i>
                 <span class="nav-link-text">Beranda</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="menu.html">
+              <a class="nav-link" href="menu.php">
                 <i class="ni ni-collection text-primary"></i>
                 <span class="nav-link-text">Menu Restaurant</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="stok.html">
+              <a class="nav-link" href="stok.php">
                 <i class="ni ni-box-2 text-primary"></i>
                 <span class="nav-link-text">Stok Bahan</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="supplier.html">
+              <a class="nav-link" href="supplier.php">
                 <i class="ni ni-delivery-fast text-primary"></i>
                 <span class="nav-link-text">Supplier</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pegawai.html">
+              <a class="nav-link" href="pegawai.php">
                 <i class="ni ni-single-02 text-primary"></i>
                 <span class="nav-link-text">Pegawai</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="transaksi.html">
+              <a class="nav-link active" href="transaksi.php">
                 <i class="ni ni-cart text-primary"></i>
                 <span class="nav-link-text">Transaksi</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pemasukan_pengeluaran.html">
+              <a class="nav-link" href="pemasukan_pengeluaran.php">
                 <i class="ni ni-bullet-list-67 text-primary"></i>
                 <span class="nav-link-text">Pemasukan dan Pengeluaran</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" data-toggle="collapse" href="#tables">
+              <a class="nav-link" data-toggle="collapse" href="#tables">
                 <i class="ni ni-folder-17 text-primary"></i>
                 <span class="nav-link-text">Laporan</span>
               </a>
               <div class="collapse" id="tables">
                 <ul class="nav nav-collapse">
                   <li class="nav-item">
-                    <a href="laporanmenu.html" class="nav-link">
+                    <a href="laporanmenu.php" class="nav-link">
                       <span class="nav-link-text">Data Menu</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanpegawai.html" class="nav-link">
+                    <a href="laporanpegawai.php" class="nav-link">
                       <span class="nav-link-text">Data Pegawai</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanstok.html" class="nav-link">
+                    <a href="laporanstok.php" class="nav-link">
                       <span class="nav-link-text">Data Stok Bahan</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporansupplier.html" class="nav-link">
+                    <a href="laporansupplier.php" class="nav-link">
                       <span class="nav-link-text">Data Supplier</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanpemasukan.html" class="nav-link">
+                    <a href="laporanpemasukan.php" class="nav-link">
                       <span class="nav-link-text">Data Pemasukan</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanpengeluaran.html" class="nav-link">
+                    <a href="laporanpengeluaran.php" class="nav-link">
                       <span class="nav-link-text">Data Pengeluaran</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporantransaksi.html" class="nav-link">
+                    <a href="laporantransaksi.php" class="nav-link">
                       <span class="nav-link-text">Data Transaksi</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanomset.html" class="nav-link">
+                    <a href="laporanomset.php" class="nav-link">
                       <span class="nav-link-text">Data Omset</span>
                     </a>
                   </li>
@@ -262,10 +262,82 @@
       </div>
     </nav>
     <!-- Header -->
-
+    <!-- Header -->
+    <div class="header pb-6">
+      <div class="container-fluid">
+        <div class="header-body">
+          <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+              <h6 class="h2 text-dark d-inline-block mb-0">Transaksi</h6>
+            </div>
+          </div>
+          <!-- transaksi -->
+            <div class="col-xl-10 order-xl-1 ml--3">
+              <div class="card">
+                <div class="card-header">
+                  <div class="row align-items-center">
+                    <div class="col-10">
+                      <h3 class="mb-0">Data Pesanan </h3>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <form action="keranjang2.php">
+                    <div class="pl-lg-2">
+                      <div class="row">
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="id">ID Menu</label>
+                            <input type="text" id="id" class="form-control" value="M-001" readonly>
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="nama">Nama Menu</label>
+                            <input type="text" id="nama" class="form-control" value="Soto Bandung" readonly>
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="porsi">Porsi</label>
+                            <input type="number" id="porsi" class="form-control" value="1" readonly>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="harga">Harga</label>
+                            <input type="number" id="harga" class="form-control" value="15000" readonly>
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="jumlah">Jumlah</label>
+                            <input type="number" id="jumlah" class="form-control">
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="subtotal">Subtotal</label>
+                            <input type="number" id="subtotal" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                      <button type="submit" class="btn btn-primary">Simpan</button>
+                    <hr class="my-4" />
+                  </form>
+                </div>
+              </div>
+            </div>
+            <!-- akhir -->
+        </div>
+      </div>
+    </div>
     <!-- Page content -->
     <div class="container-fluid mt--6">
-      <!-- Footer -->
+    <!-- Footer -->
       <footer class="footer pt-0">
         <div class="row align-items-center justify-content-lg-between">
           <div class="col-lg-6">

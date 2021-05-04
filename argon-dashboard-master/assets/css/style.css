@@ -1,0 +1,11 @@
+/*button batal*/
+.batal {
+	float: right; 
+	margin-top: -43px; 
+	margin-right: 600px;
+}
+
+/*lebar tabel*/
+.tabel-gelap {
+	width: 900px;
+}

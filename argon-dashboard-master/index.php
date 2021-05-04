@@ -1,3 +1,8 @@
+<?php 
+  require 'examples/functions.php';
+  $transaksi = query("SELECT * FROM transaksi");
+  $stok = query("SELECT * FROM stok");
+?>
 <!--
 =========================================================
 * Argon Dashboard - v1.2.0
@@ -50,43 +55,43 @@
           <!-- Nav items -->
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" href="examples/beranda.html">
+              <a class="nav-link active" href="examples/beranda.php">
                 <i class="ni ni-tv-2 text-primary"></i>
                 <span class="nav-link-text">Beranda</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="examples/menu.html">
+              <a class="nav-link" href="examples/menu.php">
                 <i class="ni ni-collection text-primary"></i>
                 <span class="nav-link-text">Menu Restaurant</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="examples/stok.html">
+              <a class="nav-link" href="examples/stok.php">
                 <i class="ni ni-box-2 text-primary"></i>
                 <span class="nav-link-text">Stok Bahan</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="examples/supplier.html">
+              <a class="nav-link" href="examples/supplier.php">
                 <i class="ni ni-delivery-fast text-primary"></i>
                 <span class="nav-link-text">Supplier</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="examples/pegawai.html">
+              <a class="nav-link" href="examples/pegawai.php">
                 <i class="ni ni-single-02 text-primary"></i>
                 <span class="nav-link-text">Pegawai</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="examples/transaksi.html">
+              <a class="nav-link" href="examples/transaksi.php">
                 <i class="ni ni-cart text-primary"></i>
                 <span class="nav-link-text">Transaksi</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="examples/pemasukan_pengeluaran.html">
+              <a class="nav-link" href="examples/pemasukan_pengeluaran.php">
                 <i class="ni ni-bullet-list-67 text-primary"></i>
                 <span class="nav-link-text">Pemasukan dan Pengeluaran</span>
               </a>
@@ -99,42 +104,42 @@
               <div class="collapse" id="tables">
                 <ul class="nav nav-collapse">
                   <li class="nav-item">
-                    <a href="laporanmenu.html" class="nav-link">
+                    <a href="laporanmenu.php" class="nav-link">
                       <span class="nav-link-text">Data Menu</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanpegawai.html" class="nav-link">
+                    <a href="laporanpegawai.php" class="nav-link">
                       <span class="nav-link-text">Data Pegawai</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanstok.html" class="nav-link">
+                    <a href="laporanstok.php" class="nav-link">
                       <span class="nav-link-text">Data Stok Bahan</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporansupplier.html" class="nav-link">
+                    <a href="laporansupplier.php" class="nav-link">
                       <span class="nav-link-text">Data Supplier</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanpemasukan.html" class="nav-link">
+                    <a href="laporanpemasukan.php" class="nav-link">
                       <span class="nav-link-text">Data Pemasukan</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanpengeluaran.html" class="nav-link">
+                    <a href="laporanpengeluaran.php" class="nav-link">
                       <span class="nav-link-text">Data Pengeluaran</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporantransaksi.html" class="nav-link">
+                    <a href="laporantransaksi.php" class="nav-link">
                       <span class="nav-link-text">Data Transaksi</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanomset.html" class="nav-link">
+                    <a href="laporanomset.php" class="nav-link">
                       <span class="nav-link-text">Data Omset</span>
                     </a>
                   </li>
@@ -387,56 +392,19 @@
                     <th scope="col" class="sort" data-sort="status">ID Pegawai</th>
                     <th scope="col" class="sort" data-sort="status">Tanggal</th>
                     <th scope="col" class="sort" data-sort="status">Nama Pelanggan</th>
-                    <th scope="col" class="sort" data-sort="completion">Total Bayar</th>
-                    <th scope="col" class="sort" data-sort="status">Status Pemesanan</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1.</td>
-                    <td>TR-001</td>
-                    <td>P-001</td>
-                    <td>15-04-2021</td>
-                    <td>Sitta</td>
-                    <td>Rp. 50000</td>
-                    <td>Selesai</td>
-                  </tr>
-                  <tr>
-                    <td>2.</td>
-                    <td>TR-002</td>
-                    <td>P-002</td>
-                    <td>15-04-2021</td>
-                    <td>Rahma</td>
-                    <td>Rp. 20000</td>
-                    <td>Selesai</td>
-                  </tr>
-                  <tr>
-                    <td>3.</td>
-                    <td>TR-003</td>
-                    <td>P-003</td>
-                    <td>15-04-2021</td>
-                    <td>Bunga</td>
-                    <td>Rp. 30000</td>
-                    <td>Selesai</td>
-                  </tr>
-                  <tr>
-                    <td>4.</td>
-                    <td>TR-004</td>
-                    <td>P-004</td>
-                    <td>15-04-2021</td>
-                    <td>Sari</td>
-                    <td>Rp. 35000</td>
-                    <td>Selesai</td>
-                  </tr>
-                  <tr>
-                    <td>5.</td>
-                    <td>TR-005</td>
-                    <td>P-005</td>
-                    <td>15-04-2021</td>
-                    <td>Nadia</td>
-                    <td>Rp. 15000</td>
-                    <td>Selesai</td>
-                  </tr>
+                  <?php $i = 1; ?>
+                  <?php foreach ($transaksi as $trans) { ?>
+                    <tr>
+                      <td><?php echo $i++; ?></td>
+                      <td><?php echo $trans['id_transaksi']; ?></td>
+                      <td><?php echo $trans['id_pegawai']; ?></td>
+                      <td><?php echo $trans['tanggal']; ?></td>
+                      <td><?php echo $trans['nama_pelanggan']; ?></td>
+                    </tr>
+                  <?php } ?>
                 </tbody>
               </table>
             </div>
@@ -457,42 +425,21 @@
                 <thead class="thead-light">
                   <tr>
                     <th scope="col" class="sort" data-sort="name">#</th>
-                    <th scope="col" class="sort" data-sort="name">ID Bahan</th>
                     <th scope="col" class="sort" data-sort="status">Nama</th>
                     <th scope="col" class="sort" data-sort="status">Jumlah</th>
+                    <th scope="col" class="sort" data-sort="status">Satuan</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1.</td>
-                    <td>ST-001</td>
-                    <td>Beras</td>
-                    <td>200 Kg</td>
-                  </tr>
-                  <tr>
-                    <td>2.</td>
-                    <td>ST-002</td>
-                    <td>Teh Botol</td>
-                    <td>2 Kerat</td>
-                  </tr>
-                  <tr>
-                    <td>3.</td>
-                    <td>ST-003</td>
-                    <td>Ayam</td>
-                    <td>6 Kg</td>
-                  </tr>
-                  <tr>
-                    <td>4.</td>
-                    <td>ST-004</td>
-                    <td>Air Mineral</td>
-                    <td>10 Dus</td>
-                  </tr>
-                  <tr>
-                    <td>5.</td>
-                    <td>ST-005</td>
-                    <td>Jeruk Limau</td>
-                    <td>2 Kg</td>
-                  </tr>
+                  <?php $i = 1; ?>
+                  <?php foreach ($stok as $s) { ?>
+                    <tr>
+                      <td><?php echo $i++; ?></td>
+                      <td><?php echo $s['nama_bahan']; ?></td>
+                      <td><?php echo $s['jumlah']; ?></td>
+                      <td><?php echo $s['satuan']; ?></td>
+                    </tr>
+                  <?php } ?>
                 </tbody>
               </table>
             </div>

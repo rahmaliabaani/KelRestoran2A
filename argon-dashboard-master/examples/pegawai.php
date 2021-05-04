@@ -21,7 +21,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Laporan</title>
+  <title>Pegawai</title>
   <!-- Favicon -->
   <link rel="icon" href="../assets/img/brand/favicon.png" type="image/png">
   <!-- Fonts -->
@@ -29,7 +29,6 @@
   <!-- Icons -->
   <link rel="stylesheet" href="../assets/vendor/nucleo/css/nucleo.css" type="text/css">
   <link rel="stylesheet" href="../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
-  <!-- Page plugins -->
   <!-- Argon CSS -->
   <link rel="stylesheet" href="../assets/css/argon.css?v=1.2.0" type="text/css">
 </head>
@@ -50,91 +49,91 @@
           <!-- Nav items -->
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="beranda.html">
+              <a class="nav-link" href="beranda.php">
                 <i class="ni ni-tv-2 text-primary"></i>
                 <span class="nav-link-text">Beranda</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="menu.html">
+              <a class="nav-link" href="menu.php">
                 <i class="ni ni-collection text-primary"></i>
                 <span class="nav-link-text">Menu Restaurant</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="stok.html">
+              <a class="nav-link" href="stok.php">
                 <i class="ni ni-box-2 text-primary"></i>
                 <span class="nav-link-text">Stok Bahan</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="supplier.html">
+              <a class="nav-link" href="supplier.php">
                 <i class="ni ni-delivery-fast text-primary"></i>
                 <span class="nav-link-text">Supplier</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pegawai.html">
+              <a class="nav-link active" href="pegawai.php">
                 <i class="ni ni-single-02 text-primary"></i>
                 <span class="nav-link-text">Pegawai</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="transaksi.html">
+              <a class="nav-link" href="transaksi.php">
                 <i class="ni ni-cart text-primary"></i>
                 <span class="nav-link-text">Transaksi</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pemasukan_pengeluaran.html">
+              <a class="nav-link" href="pemasukan_pengeluaran.php">
                 <i class="ni ni-bullet-list-67 text-primary"></i>
                 <span class="nav-link-text">Pemasukan dan Pengeluaran</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" data-toggle="collapse" href="#tables">
+              <a class="nav-link" data-toggle="collapse" href="#tables">
                 <i class="ni ni-folder-17 text-primary"></i>
                 <span class="nav-link-text">Laporan</span>
               </a>
               <div class="collapse" id="tables">
                 <ul class="nav nav-collapse">
                   <li class="nav-item">
-                    <a href="laporanmenu.html" class="nav-link">
+                    <a href="laporanmenu.php" class="nav-link">
                       <span class="nav-link-text">Data Menu</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanpegawai.html" class="nav-link">
+                    <a href="laporanpegawai.php" class="nav-link">
                       <span class="nav-link-text">Data Pegawai</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanstok.html" class="nav-link">
+                    <a href="laporanstok.php" class="nav-link">
                       <span class="nav-link-text">Data Stok Bahan</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporansupplier.html" class="nav-link">
+                    <a href="laporansupplier.php" class="nav-link">
                       <span class="nav-link-text">Data Supplier</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanpemasukan.html" class="nav-link">
+                    <a href="laporanpemasukan.php" class="nav-link">
                       <span class="nav-link-text">Data Pemasukan</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanpengeluaran.html" class="nav-link">
+                    <a href="laporanpengeluaran.php" class="nav-link">
                       <span class="nav-link-text">Data Pengeluaran</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporantransaksi.html" class="nav-link">
+                    <a href="laporantransaksi.php" class="nav-link">
                       <span class="nav-link-text">Data Transaksi</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanomset.html" class="nav-link">
+                    <a href="laporanomset.php" class="nav-link">
                       <span class="nav-link-text">Data Omset</span>
                     </a>
                   </li>
@@ -211,12 +210,6 @@
                     <small>Payments</small>
                   </a>
                   <a href="#!" class="col-4 shortcut-item">
-                    <span class="shortcut-media avatar rounded-circle bg-gradient-green">
-                      <i class="ni ni-books"></i>
-                    </span>
-                    <small>Reports</small>
-                  </a>
-                  <a href="#!" class="col-4 shortcut-item">
                     <span class="shortcut-media avatar rounded-circle bg-gradient-yellow">
                       <i class="ni ni-basket"></i>
                     </span>
@@ -268,80 +261,39 @@
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-dark d-inline-block mb-0">Laporan</h6>
+              <h6 class="h2 text-dark d-inline-block mb-0">Pegawai</h6>
             </div>
           </div>
-      <!-- cetak transaksi -->
-          <!-- modal cetak -->
-        <a data-toggle="modal" data-target="#smallModal">
-          <button class="btn btn-primary mb-3"><i class="fas fa-print"></i> Cetak Laporan</button>
-        </a>
-          <div class="modal fade" id="smallModal" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-sm" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h4 class="modal-title" id="smallModalLabel">Laporan Transaksi</h4>
-                </div>
-                <div class="modal-body">
-                  <form method="POST" action="cetakom.php">
-                    <label for="">Tanggal Awal</label>
-                    <div class="form-group">
-                      <div class="form-line">
-                        <input type="date" name="tgl_awal" class="form-control">
-                      </div>
-                    </div>
-
-                    <label for="">Tanggal Akhir</label>
-                    <div class="form-group">
-                      <div class="form-line">
-                        <input type="date" name="tgl_akhir" class="form-control">
-                      </div>
-                    </div>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="submit" class="btn btn-info">Cetak</button>
-                  <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- akhir modal -->
-          <!-- Dark table -->
+          <a href="tambahpegawai.php"><button type="submit" class="btn btn-primary mb-3"><i class="ni ni-single-02"></i> Tambah Pegawai</button></a>
+             <!-- Dark table -->
             <div class="row">
               <div class="col">
                 <div class="card bg-default shadow">
                   <div class="card-header bg-transparent border-0">
-                    <h3 class="text-white mb-0">Data Transaksi</h3>
+                    <h3 class="text-white mb-0">Data Pegawai</h3>
                   </div>
                   <div class="table-responsive">
                     <table class="table align-items-center table-dark table-flush">
                       <thead class="thead-dark">
                         <tr>
                           <th scope="col" class="sort" data-sort="name">#</th>
-                          <th scope="col" class="sort" data-sort="budget">No Trans</th>
-                          <th scope="col" class="sort" data-sort="status">ID Pegawai</th>
-                          <th scope="col">Nama Pelanggan</th>
-                          <th scope="col" class="sort" data-sort="completion">Total Harga</th>
-                          <th scope="col">Status Pemesanan</th>
+                          <th scope="col" class="sort" data-sort="budget">ID Pegawai</th>
+                          <th scope="col" class="sort" data-sort="status">Nama</th>
+                          <th scope="col" class="sort" data-sort="status">Posisi</th>
+                          <th scope="col" class="sort" data-sort="status">Aksi</th>
                         </tr>
                       </thead>
                       <tbody class="list">
                         <tr>
                           <td>1.</td>
-                          <td>TR-001</td>
                           <td>P-001</td>
-                          <td>Sitta</td>
-                          <td>Rp. 50000</td>
-                          <td>Selesai</td>
-                        </tr>
-                        <tr>
-                          <td>2.</td>
-                          <td>TR-002</td>
-                          <td>P-002</td>
-                          <td>Rahma</td>
-                          <td>Rp. 20000</td>
-                          <td>Selesai</td>
+                          <td>Fasha</td>
+                          <td>General Manager</td>
+                          <td>
+                            <a href=""><i class="far fa-edit text-white"></i></a> |
+                            <a href=""><i class="far fa-trash-alt text-white"></i></a> |
+                            <a href="detail.php" class="text-white">Detail</a>
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -349,7 +301,7 @@
                 </div>
               </div>
             </div>
-      <!-- akhir tabel -->
+            <!-- akhir tabel -->
         </div>
       </div>
     </div>
@@ -374,9 +326,6 @@
   <script src="../assets/vendor/js-cookie/js.cookie.js"></script>
   <script src="../assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
   <script src="../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
-  <!-- Optional JS -->
-  <script src="../assets/vendor/chart.js/dist/Chart.min.js"></script>
-  <script src="../assets/vendor/chart.js/dist/Chart.extension.js"></script>
   <!-- Argon JS -->
   <script src="../assets/js/argon.js?v=1.2.0"></script>
 </body>

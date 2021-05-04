@@ -1,3 +1,8 @@
+<?php 
+  require 'functions.php';
+  $transaksi = query("SELECT * FROM transaksi");
+  $menu = query("SELECT * FROM menu");
+?>
 <!--
 =========================================================
 * Argon Dashboard - v1.2.0
@@ -21,7 +26,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Supplier</title>
+  <title>Transaksi</title>
   <!-- Favicon -->
   <link rel="icon" href="../assets/img/brand/favicon.png" type="image/png">
   <!-- Fonts -->
@@ -32,6 +37,8 @@
   <!-- Page plugins -->
   <!-- Argon CSS -->
   <link rel="stylesheet" href="../assets/css/argon.css?v=1.2.0" type="text/css">
+  <!-- my css -->
+  <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 
 <body>
@@ -50,43 +57,43 @@
           <!-- Nav items -->
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="beranda.html">
+              <a class="nav-link" href="beranda.php">
                 <i class="ni ni-tv-2 text-primary"></i>
                 <span class="nav-link-text">Beranda</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="menu.html">
+              <a class="nav-link" href="menu.php">
                 <i class="ni ni-collection text-primary"></i>
                 <span class="nav-link-text">Menu Restaurant</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="stok.html">
+              <a class="nav-link" href="stok.php">
                 <i class="ni ni-box-2 text-primary"></i>
                 <span class="nav-link-text">Stok Bahan</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="supplier.html">
+              <a class="nav-link" href="supplier.php">
                 <i class="ni ni-delivery-fast text-primary"></i>
                 <span class="nav-link-text">Supplier</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pegawai.html">
+              <a class="nav-link" href="pegawai.php">
                 <i class="ni ni-single-02 text-primary"></i>
                 <span class="nav-link-text">Pegawai</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="transaksi.html">
+              <a class="nav-link active" href="transaksi.php">
                 <i class="ni ni-cart text-primary"></i>
                 <span class="nav-link-text">Transaksi</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pemasukan_pengeluaran.html">
+              <a class="nav-link" href="pemasukan_pengeluaran.php">
                 <i class="ni ni-bullet-list-67 text-primary"></i>
                 <span class="nav-link-text">Pemasukan dan Pengeluaran</span>
               </a>
@@ -99,42 +106,42 @@
               <div class="collapse" id="tables">
                 <ul class="nav nav-collapse">
                   <li class="nav-item">
-                    <a href="laporanmenu.html" class="nav-link">
+                    <a href="laporanmenu.php" class="nav-link">
                       <span class="nav-link-text">Data Menu</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanpegawai.html" class="nav-link">
+                    <a href="laporanpegawai.php" class="nav-link">
                       <span class="nav-link-text">Data Pegawai</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanstok.html" class="nav-link">
+                    <a href="laporanstok.php" class="nav-link">
                       <span class="nav-link-text">Data Stok Bahan</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporansupplier.html" class="nav-link">
+                    <a href="laporansupplier.php" class="nav-link">
                       <span class="nav-link-text">Data Supplier</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanpemasukan.html" class="nav-link">
+                    <a href="laporanpemasukan.php" class="nav-link">
                       <span class="nav-link-text">Data Pemasukan</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanpengeluaran.html" class="nav-link">
+                    <a href="laporanpengeluaran.php" class="nav-link">
                       <span class="nav-link-text">Data Pengeluaran</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporantransaksi.html" class="nav-link">
+                    <a href="laporantransaksi.php" class="nav-link">
                       <span class="nav-link-text">Data Transaksi</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanomset.html" class="nav-link">
+                    <a href="laporanomset.php" class="nav-link">
                       <span class="nav-link-text">Data Omset</span>
                     </a>
                   </li>
@@ -268,114 +275,100 @@
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-dark d-inline-block mb-0">Supplier</h6>
+              <h6 class="h2 text-dark d-inline-block mb-0">Transaksi</h6>
             </div>
           </div>
-          <a href="tambahsupplier.html"><button type="submit" class="btn btn-primary mb-3"><i class="ni ni-delivery-fast"></i> Tambah Supplier</button></a>
-            <!-- Dark table -->
-            <div class="row">
+            <button type="submit" class="btn btn-primary mb-3" data-toggle="modal" data-target="#myModal"><i class="ni ni-bag-17"></i> Tambah Transaksi</button>
+            <div id="myModal" class="modal fade" role="dialog">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Pilih Barang
+                    <button type="button" class="close mt--4" data-dismiss="modal">&times;</button></h5>
+                  </div>
+                  <div class="modal-body">
+                    <div class="table-responsive">
+                      <table id="zero_config" class="table table-striped table-bordered">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>ID Menu</th>
+                            <th>Nama Menu</th>
+                            <th>Porsi</th>
+                            <th>Harga</th>
+                            <th>Status Menu</th>
+                            <th>Opsi</th>
+                          </tr>
+                          <?php $i = 1; ?>
+                          <?php foreach ($menu as $m) { ?>
+                          <tr>
+                            <td><?php echo $i++;?></td>
+                            <td><?php echo $m['id_menu'];?></td>
+                            <td><?php echo $m['nama'];?></td>
+                            <td><?php echo $m['porsi'];?></td>
+                            <td>Rp. <?php echo number_format($m['harga']);?></td>
+                            <td><?php echo $m['status_menu'];?></td>
+                            <td>
+                            <a href="keranjang.php" class="btn btn-default"><i class="ni ni-basket"></i></a>
+                            </td>
+                          </tr>
+                          <?php } ?>
+                        </thead>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+             <!-- Dark table -->
+            <div class="row tabel-gelap">
               <div class="col">
                 <div class="card bg-default shadow">
                   <div class="card-header bg-transparent border-0">
-                    <h3 class="text-white mb-0">Supplier Bahan</h3>
+                    <h3 class="text-white mb-0">Data Transaksi</h3>
                   </div>
                   <div class="table-responsive">
                     <table class="table align-items-center table-dark table-flush">
                       <thead class="thead-dark">
                         <tr>
                           <th scope="col" class="sort" data-sort="name">#</th>
-                          <th scope="col" class="sort" data-sort="budget">ID Supplier</th>
-                          <th scope="col" class="sort" data-sort="status">Nama Supplier</th>
-                          <th scope="col" class="sort" data-sort="status">Alamat</th>
-                          <th scope="col" class="sort" data-sort="status">No Telepon</th>
-                          <th scope="col" class="sort" data-sort="status">Email</th>
-                          <th scope="col" class="sort" data-sort="status">Jenis Supplier</th>
-                          <th scope="col" class="sort" data-sort="status">Aksi</th>
+                          <th scope="col" class="sort" data-sort="budget">ID Transaksi</th>
+                          <th scope="col" class="sort" data-sort="status">ID Pegawai</th>
+                          <th scope="col" class="sort" data-sort="status">Tanggal</th>
+                          <th scope="col" class="sort" data-sort="status">Nama Pelanggan</th>
+                          <th scope="col" class="sort" data-sort="status">Total Bayar</th>
                         </tr>
                       </thead>
                       <tbody class="list">
+                      <?php $i = 1; ?>
+                      <?php foreach ($transaksi as $trans) { ?>
                         <tr>
-                          <td>1.</td>
-                          <td>SP-001</td>
-                          <td>Owfat</td>
-                          <td>Jl.Cijawura Hilir Kec.Cijawura Kab.Bandung</td>
-                          <td>08997681547</td>
-                          <td>owfatmilk@gmail.com</td>
-                          <td>Kelapa</td>
-                          <td>
-                            <a href=""><i class="far fa-edit text-white"></i></a> |
-                            <a href=""><i class="far fa-trash-alt text-white"></i></a>
-                          </td>
+                          <td><?php echo $i++; ?></td>
+                          <td><?php echo $trans['id_transaksi']; ?></td>
+                          <td><?php echo $trans['id_pegawai']; ?></td>
+                          <td><?php echo $trans['tanggal']; ?></td>
+                          <td><?php echo $trans['nama_pelanggan']; ?></td>
+                          <td>Rp. <?php echo number_format($trans['total_bayar']); ?></td>
                         </tr>
-                        <tr>
-                          <td>2.</td>
-                          <td>SP-002</td>
-                          <td>Slash</td>
-                          <td>Jl.Kebon Jeruk Jakarta Barat</td>
-                          <td>08156789134</td>
-                          <td>slash123@gmail.com</td>
-                          <td>Ayam, lele, bebek</td>
-                          <td>
-                            <a href=""><i class="far fa-edit text-white"></i></a> |
-                            <a href=""><i class="far fa-trash-alt text-white"></i></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>3.</td>
-                          <td>SP-003</td>
-                          <td>Kama</td>
-                          <td>Sunrise Garden Complex Surya Mandala Jakarta Barat</td>
-                          <td>081978922274</td>
-                          <td>kama1011@gmail.com</td>
-                          <td>kentang, kubis, cabe</td>
-                          <td>
-                            <a href=""><i class="far fa-edit text-white"></i></a> |
-                            <a href=""><i class="far fa-trash-alt text-white"></i></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>4.</td>
-                          <td>SP-004</td>
-                          <td>Bakir</td>
-                          <td>jl. S . Wiryopranoto</td>
-                          <td>087725679971</td>
-                          <td>pt.bakirmakmur@gmail.com</td>
-                          <td>beras, telor</td>
-                          <td>
-                            <a href=""><i class="far fa-edit text-white"></i></a> |
-                            <a href=""><i class="far fa-trash-alt text-white"></i></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>5.</td>
-                          <td>SP-005</td>
-                          <td>Fore</td>
-                          <td>jl.menara sudirman jakarta selatan</td>
-                          <td>097744492317</td>
-                          <td>fore897@gmail.com</td>
-                          <td>teh, coffe, air mineral</td>
-                          <td>
-                            <a href=""><i class="far fa-edit text-white"></i></a> |
-                            <a href=""><i class="far fa-trash-alt text-white"></i></a>
-                          </td>
-                        </tr>
+                      <?php } ?>
                       </tbody>
                     </table>
                   </div>
                 </div>
               </div>
             </div>
-            <!-- akhir tabel -->
+      <!-- akhir tabel -->
+
         </div>
       </div>
     </div>
     <!-- Page content -->
     <div class="container-fluid mt--6">
-      <!-- Footer -->
+    <!-- Footer -->
       <footer class="footer pt-0">
         <div class="row align-items-center justify-content-lg-between">
           <div class="col-lg-6">
-           <!--  <div class="copyright text-center  text-lg-left  text-muted">
+            <!-- <div class="copyright text-center  text-lg-left  text-muted">
               &copy; 2020 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
             </div> -->
           </div>
