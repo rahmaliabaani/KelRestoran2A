@@ -1,23 +1,20 @@
-<?php 
+<?php
+//fungsi untuk melakukan koneksi ke database 
 function koneksi() {
-	return mysqli_connect('localhost', 'root', '', 'pw_restaurant');
+	$conn = mysqli_connect("localhost", "root", "");
+	mysqli_select_db($conn, "pw_restaurant");
+
+	return $conn;
 }
 
-function query($query) {
+//function untuk melakukan query dan memasukannya kedalam array 
+function query($sql) {
 	$conn = koneksi();
-
-	$result = mysqli_query($conn, $query);
-
-	// jika hasilnya hanya 1 data
-	if (mysqli_num_rows($result) == 1) {
-		return mysqli_fetch_assoc($result);
-	}
-
+	$result = mysqli_query($conn, "$sql");
 	$rows = [];
 	while ($row = mysqli_fetch_assoc($result)) {
 		$rows[] = $row;
 	}
-
 	return $rows;
 }
 ?>

@@ -1,3 +1,8 @@
+<?php 
+  require 'functions.php';
+  $supplier = query("SELECT * FROM supplier");
+?>
+
 <!--
 =========================================================
 * Argon Dashboard - v1.2.0
@@ -32,6 +37,8 @@
   <!-- Page plugins -->
   <!-- Argon CSS -->
   <link rel="stylesheet" href="../assets/css/argon.css?v=1.2.0" type="text/css">
+  <!-- my css -->
+  <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 
 <body>
@@ -273,7 +280,7 @@
           </div>
           <a href="tambahsupplier.php"><button type="submit" class="btn btn-primary mb-3"><i class="ni ni-delivery-fast"></i> Tambah Supplier</button></a>
             <!-- Dark table -->
-            <div class="row">
+            <div class="row tabel-gelap">
               <div class="col">
                 <div class="card bg-default shadow">
                   <div class="card-header bg-transparent border-0">
@@ -291,17 +298,20 @@
                         </tr>
                       </thead>
                       <tbody class="list">
-                        <tr>
-                          <td>1.</td>
-                          <td>SP-001</td>
-                          <td>Owfat</td>
-                          <td>Kelapa</td>
-                          <td>
-                            <a href=""><i class="far fa-edit text-white"></i></a> |
-                            <a href=""><i class="far fa-trash-alt text-white"></i></a> |
-                            <a href="detail.php" class="text-white">Detail</a>
-                          </td>
-                        </tr>
+                        <?php $i = 1; ?>
+                        <?php foreach ($supplier as $sup) { ?>
+                          <tr>
+                            <td><?php echo $i++; ?></td>
+                            <td><?php echo $sup['id_supplier']; ?></td>
+                            <td><?php echo $sup['nama']; ?></td>
+                            <td><?php echo $sup['jenis']; ?></td>
+                            <td>
+                              <a href=""><i class="far fa-edit text-white"></i></a> |
+                              <a href=""><i class="far fa-trash-alt text-white"></i></a> |
+                              <a href="detailsupplier.php?id_supplier=<?php echo $sup['id_supplier']; ?>" class="text-white">Detail</a>
+                            </td>
+                          </tr>
+                        <?php } ?>
                       </tbody>
                     </table>
                   </div>

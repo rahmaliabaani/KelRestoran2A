@@ -1,5 +1,6 @@
 <?php 
   require 'functions.php';
+  $menu = query("SELECT * FROM menu");
 ?>
 <!--
 =========================================================
@@ -35,6 +36,8 @@
   <!-- Page plugins -->
   <!-- Argon CSS -->
   <link rel="stylesheet" href="../assets/css/argon.css?v=1.2.0" type="text/css">
+  <!-- my css -->
+  <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 
 <body>
@@ -276,7 +279,7 @@
           </div>
           <a href="tambahmenu.php"><button type="submit" class="btn btn-primary mb-3"><i class="ni ni-collection"></i> Tambah Menu</button></a>
             <!-- Dark table -->
-            <div class="row">
+            <div class="row tabel-gelap">
               <div class="col">
                 <div class="card bg-default shadow">
                   <div class="card-header bg-transparent border-0">
@@ -297,19 +300,22 @@
                         </tr>
                       </thead>
                       <tbody class="list">
-                        <tr>
-                          <td>1.</td>
-                          <td>M-001</td>
-                          <td>Pecel ayam</td>
-                          <td>1</td>
-                          <td>25.000</td>
-                          <td>Ada</td>
-                          <td><img src="../assets/img/pecelayam.jpg" alt=""></td>
-                          <td>
+                        <?php $i = 1; ?>
+                          <?php foreach ($menu as $m) { ?>
+                          <tr>
+                            <td><?php echo $i++;?></td>
+                            <td><?php echo $m['id_menu'];?></td>
+                            <td><?php echo $m['nama'];?></td>
+                            <td><?php echo $m['porsi'];?></td>
+                            <td>Rp. <?php echo number_format($m['harga']);?></td>
+                            <td><?php echo $m['status_menu'];?></td>
+                            <td><img src="../assets/img/<?php echo $m['gambar']; ?>" alt=""></td>
+                            <td>
                             <a href=""><i class="far fa-edit text-white"></i></a> |
                             <a href=""><i class="far fa-trash-alt text-white"></i></a>
-                          </td>
-                        </tr>
+                            </td>
+                          </tr>
+                          <?php } ?>
                       </tbody>
                     </table>
                   </div>

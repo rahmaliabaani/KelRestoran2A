@@ -1,3 +1,8 @@
+<?php 
+  require 'functions.php';
+  $pegawai = query("SELECT * FROM pegawai");
+?>
+
 <!--
 =========================================================
 * Argon Dashboard - v1.2.0
@@ -31,6 +36,8 @@
   <link rel="stylesheet" href="../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
   <!-- Argon CSS -->
   <link rel="stylesheet" href="../assets/css/argon.css?v=1.2.0" type="text/css">
+  <!-- my css -->
+  <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 
 <body>
@@ -266,7 +273,7 @@
           </div>
           <a href="tambahpegawai.php"><button type="submit" class="btn btn-primary mb-3"><i class="ni ni-single-02"></i> Tambah Pegawai</button></a>
              <!-- Dark table -->
-            <div class="row">
+            <div class="row tabel-gelap">
               <div class="col">
                 <div class="card bg-default shadow">
                   <div class="card-header bg-transparent border-0">
@@ -280,21 +287,26 @@
                           <th scope="col" class="sort" data-sort="budget">ID Pegawai</th>
                           <th scope="col" class="sort" data-sort="status">Nama</th>
                           <th scope="col" class="sort" data-sort="status">Posisi</th>
+                          <th scope="col" class="sort" data-sort="status">Gambar</th>
                           <th scope="col" class="sort" data-sort="status">Aksi</th>
                         </tr>
                       </thead>
                       <tbody class="list">
-                        <tr>
-                          <td>1.</td>
-                          <td>P-001</td>
-                          <td>Fasha</td>
-                          <td>General Manager</td>
-                          <td>
+                      <?php $i = 1; ?>
+                      <?php foreach ($pegawai as $p) { ?>
+                          <tr>
+                            <td><?php echo $i++; ?></td>
+                            <td><?php echo $p['id_pegawai']; ?></td>
+                            <td><?php echo $p['nama']; ?></td>
+                            <td><?php echo $p['posisi']; ?></td>
+                            <td><img src="../assets/img/pegawai/<?php echo $p['gambar']; ?>" alt=""></td>
+                            <td>
                             <a href=""><i class="far fa-edit text-white"></i></a> |
                             <a href=""><i class="far fa-trash-alt text-white"></i></a> |
-                            <a href="detail.php" class="text-white">Detail</a>
-                          </td>
-                        </tr>
+                            <a href="detailpegawai.php?id_pegawai=<?php echo $p['id_pegawai']; ?>" class="text-white">Detail</a> 
+                            </td>
+                          </tr>
+                        <?php } ?>
                       </tbody>
                     </table>
                   </div>

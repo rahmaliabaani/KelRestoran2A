@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 04 Bulan Mei 2021 pada 10.31
+-- Waktu pembuatan: 06 Bulan Mei 2021 pada 09.38
 -- Versi server: 10.1.34-MariaDB
 -- Versi PHP: 7.2.7
 
@@ -113,13 +113,13 @@ CREATE TABLE `pegawai` (
 --
 
 INSERT INTO `pegawai` (`id_pegawai`, `nama`, `posisi`, `alamat`, `tanggal_lahir`, `no_telepon`, `gambar`) VALUES
-('P-001', 'Fasha', 'General Manager', 'Jl. Kacang Kapri Kav. 13 Matraman, Jakarta timur', '1993-05-01', '081236181272', 'fasha.png'),
-('P-002', 'Juna', 'Executive Chef', 'Jl. Kehormatan Blok A No.19 Kebon Jeruk, Jakarta Barat', '1990-02-19', '087162917512', 'juna.png'),
+('P-001', 'Fasha', 'Manager', 'Jl. Kacang Kapri Kav. 13 Matraman, Jakarta timur', '1993-05-01', '081236181272', 'fasha.png'),
+('P-002', 'Juna', 'Chef', 'Jl. Kehormatan Blok A No.19 Kebon Jeruk, Jakarta Barat', '1990-02-19', '087162917512', 'juna.png'),
 ('P-003', 'Gerald', 'Chef', 'Jl. Cinta Boulevard No.3 Pesanggrahan, Jaksel', '1999-09-09', '089376121718', 'gerald.png'),
 ('P-004', 'Ferra', 'Kasir', 'Jl.Satria No.2 Gempol, Jakarta Timur', '1999-10-10', '087165871832', 'ferra.png'),
-('P-005', 'Sintya', 'waitress', 'Jl. H.R.Rasuna Said Jakarta', '1998-04-08', '089583257587', 'sintya.png'),
-('P-006', 'Martin', 'Dishwasher', 'Jl. Budi Kemuliaan I No. 1 Jakarta Pusat', '2000-07-04', '088276197169', 'martin.png'),
-('P-007', 'Ferry', 'Delivery Driver', 'Jl. Budi Kemuliaan I No. 1 Jakarta Pusat', '1999-09-04', '089716286198', 'ferry.png');
+('P-005', 'Sintya', 'Waitress', 'Jl. H.R.Rasuna Said Jakarta', '1998-04-08', '089583257587', 'sintya.png'),
+('P-006', 'Martin', 'Waitress', 'Jl. Budi Kemuliaan I No. 1 Jakarta Pusat', '2000-07-04', '088276197169', 'martin.png'),
+('P-007', 'Ferry', 'Kasir', 'Jl. Budi Kemuliaan I No. 1 Jakarta Pusat', '1999-09-04', '089716286198', 'ferry.png');
 
 -- --------------------------------------------------------
 
@@ -198,7 +198,7 @@ INSERT INTO `stok` (`id_stok`, `nama_bahan`, `jumlah`, `satuan`) VALUES
 ('ST-001', 'Beras', 200, 'kg'),
 ('ST-002', 'Teh Botol', 2, 'kerat'),
 ('ST-003', 'Ayam', 6, 'kg'),
-('ST-004', 'Air Mineral', 10, 'dus'),
+('ST-004', 'Aqua', 10, 'dus'),
 ('ST-005', 'Jeruk Limau', 2, 'kg');
 
 -- --------------------------------------------------------

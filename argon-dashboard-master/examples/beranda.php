@@ -1,5 +1,5 @@
-<?php 
-  require 'functions.php';
+<?php
+require 'functions.php';
   $transaksi = query("SELECT * FROM transaksi");
   $stok = query("SELECT * FROM stok");
 ?>
@@ -256,7 +256,7 @@
                   <span>Settings</span>
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="#!" class="dropdown-item">
+                <a href="login.php" class="dropdown-item">
                   <i class="ni ni-user-run"></i>
                   <span>Logout</span>
                 </a>

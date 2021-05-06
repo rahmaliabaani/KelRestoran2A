@@ -1,6 +1,7 @@
 <?php 
   require 'functions.php';
-  $stok = query("SELECT * FROM stok");
+  $id = $_GET['id_supplier'];
+  $sup = query("SELECT * FROM supplier WHERE id_supplier = '$id'")[0];
 ?>
 
 <!--
@@ -26,7 +27,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Stok Bahan</title>
+  <title>Supplier</title>
   <!-- Favicon -->
   <link rel="icon" href="../assets/img/brand/favicon.png" type="image/png">
   <!-- Fonts -->
@@ -69,13 +70,13 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="stok.php">
+              <a class="nav-link" href="stok.php">
                 <i class="ni ni-box-2 text-primary"></i>
                 <span class="nav-link-text">Stok Bahan</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="supplier.php">
+              <a class="nav-link active" href="supplier.php">
                 <i class="ni ni-delivery-fast text-primary"></i>
                 <span class="nav-link-text">Supplier</span>
               </a>
@@ -275,61 +276,53 @@
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-dark d-inline-block mb-0">Stok Bahan</h6>
+              <h6 class="h2 text-dark d-inline-block mb-0">Detail Supplier</h6>
             </div>
           </div>
-          <a href="tambahstok.php"><button type="submit" class="btn btn-primary mb-3"><i class="ni ni-box-2"></i> Tambah Stok</button></a>
-          <!-- Dark table -->
-            <div class="row tabel-gelap">
-              <div class="col">
-                <div class="card bg-default shadow">
-                  <div class="card-header bg-transparent border-0">
-                    <h3 class="text-white mb-0">Data Stok Bahan</h3>
-                  </div> 
-                  <div class="table-responsive">
-                    <table class="table align-items-center table-dark table-flush">
-                      <thead class="thead-dark">
-                        <tr>
-                          <th scope="col" class="sort" data-sort="name">#</th>
-                          <th scope="col" class="sort" data-sort="name">ID Bahan</th>
-                          <th scope="col" class="sort" data-sort="status">Nama</th>
-                          <th scope="col" class="sort" data-sort="status">Jumlah</th>
-                          <th scope="col" class="sort" data-sort="status">Satuan</th>
-                          <th scope="col" class="sort" data-sort="status">Aksi</th>
-                        </tr>
-                      </thead>
-                      <tbody class="list">
-                      <?php $i = 1; ?>
-                        <?php foreach ($stok as $s) { ?>
-                          <tr>
-                            <td><?php echo $i++; ?></td>
-                            <td><?php echo $s['id_stok']; ?></td>
-                            <td><?php echo $s['nama_bahan']; ?></td>
-                            <td><?php echo $s['jumlah']; ?></td>
-                            <td><?php echo $s['satuan']; ?></td>
-                            <td>
-                            <a href=""><i class="far fa-edit text-white"></i></a> |
-                            <a href=""><i class="far fa-trash-alt text-white"></i></a>
-                            </td>
-                          </tr>
-                        <?php } ?>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- akhir tabel -->
         </div>
       </div>
     </div>
+
+    <!-- Page content -->
+    <div class="container-fluid mt--6">
+      <div class="row">
+        <div class="col-xl-4 order-xl-2">
+          <div class="card card-profile">
+            <img src="../assets/img/theme/img-1-1000x600.jpg" alt="Image placeholder" class="card-img-top">
+            <div class="card-body pt-0 mt-3">
+              <div class="text-center">
+                <div class="h4 font-weight-300">
+                  <?php echo $sup['id_supplier']; ?>
+                </div>
+                <div class="h4 font-weight-300">
+                  <?php echo $sup['nama']; ?>
+                </div>
+                <div class="h4 font-weight-300">
+                  <?php echo $sup['jenis']; ?>
+                </div>
+                <div class="h4 font-weight-300">
+                  <?php echo $sup['alamat']; ?>
+                </div>
+                <div class="h4 font-weight-300">
+                  <?php echo $sup['no_telepon']; ?>
+                </div>
+                <div class="h4 font-weight-300">
+                  <?php echo $sup['email']; ?>
+                </div>
+
+                <button class="btn btn-default mt-2"><a href="supplier.php" class="text-white">Kembali</a></button>
+
+              </div>
+            </div>
+          </div>
+        </div>
     <!-- Page content -->
     <div class="container-fluid mt--6">
       <!-- Footer -->
       <footer class="footer pt-0">
         <div class="row align-items-center justify-content-lg-between">
           <div class="col-lg-6">
-            <!-- <div class="copyright text-center  text-lg-left  text-muted">
+           <!--  <div class="copyright text-center  text-lg-left  text-muted">
               &copy; 2020 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
             </div> -->
           </div>
@@ -345,7 +338,8 @@
   <script src="../assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
   <script src="../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
   <!-- Optional JS -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTTfWur0PDbZWPr7Pmq8K3jiDp0_xUziI"></script>
+  <script src="../assets/vendor/chart.js/dist/Chart.min.js"></script>
+  <script src="../assets/vendor/chart.js/dist/Chart.extension.js"></script>
   <!-- Argon JS -->
   <script src="../assets/js/argon.js?v=1.2.0"></script>
 </body>
