@@ -68,6 +68,12 @@
               </a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="meja.php">
+                <i class="fas fa-chair text-primary"></i>
+                <span class="nav-link-text">Meja</span>
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="stok.php">
                 <i class="ni ni-box-2 text-primary"></i>
                 <span class="nav-link-text">Stok Bahan</span>

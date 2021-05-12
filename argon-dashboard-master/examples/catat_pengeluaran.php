@@ -1,3 +1,17 @@
+<?php 
+require 'functions.php';
+
+if (isset($_POST['tambahpengeluaran'])) {
+  if (tambahpengeluaran($_POST) > 0) {
+    echo "<script> document.location.href = 'pemasukan_pengeluaran.php';
+    </script>";
+  } else {
+    echo "<script> document.location.href = 'beranda.php';
+    </script>";
+  }
+  
+}
+?>
 <!--
 =========================================================
 * Argon Dashboard - v1.2.0
@@ -61,6 +75,12 @@
               <a class="nav-link" href="menu.php">
                 <i class="ni ni-collection text-primary"></i>
                 <span class="nav-link-text">Menu Restaurant</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="meja.php">
+                <i class="fas fa-chair text-primary"></i>
+                <span class="nav-link-text">Meja</span>
               </a>
             </li>
             <li class="nav-item">
@@ -240,24 +260,6 @@
                   </div>
                 </div>
               </a>
-              <div class="dropdown-menu  dropdown-menu-right ">
-                <div class="dropdown-header noti-title">
-                  <h6 class="text-overflow m-0">Welcome!</h6>
-                </div>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-single-02"></i>
-                  <span>My profile</span>
-                </a>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-settings-gear-65"></i>
-                  <span>Settings</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-user-run"></i>
-                  <span>Logout</span>
-                </a>
-              </div>
             </li>
           </ul>
         </div>
@@ -284,25 +286,19 @@
                   </div>
                 </div>
                 <div class="card-body">
-                  <form action="pemasukan_pengeluaran.php">
+                  <form action="" method="POST">
                     <div class="pl-lg-2">
                       <div class="row">
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <label class="form-control-label" for="id">ID Pengeluaran</label>
-                            <input type="text" id="id" class="form-control">
-                          </div>
-                        </div>
-                        <div class="col-lg-4">
-                          <div class="form-group">
                             <label class="form-control-label" for="jenis">Jenis</label>
-                            <input type="text" id="jenis" class="form-control">
+                            <input type="text" id="jenis" class="form-control" name="jenis">
                           </div>
                         </div>
                         <div class="col-lg-4">
                           <div class="form-group">
                             <label class="form-control-label" for="porsi">Keterangan</label>
-                            <textarea rows="1" class="form-control"></textarea>
+                            <textarea rows="1" class="form-control" name="keterangan"></textarea>
                           </div>
                         </div>
                       </div>
@@ -310,18 +306,18 @@
                         <div class="col-lg-4">
                           <div class="form-group">
                             <label class="form-control-label" for="tgl">Tanggal</label>
-                            <input type="date" id="tgl" class="form-control">
+                            <input type="date" id="tgl" class="form-control" name="tanggal" value="<?php echo date('Y-m-d'); ?>">
                           </div>
                         </div>
                         <div class="col-lg-4">
                           <div class="form-group">
                             <label class="form-control-label" for="jumlah">Jumlah</label>
-                            <input type="number" id="jumlah" class="form-control">
+                            <input type="number" id="jumlah" class="form-control" name="jumlah">
                           </div>
                         </div>
                       </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="submit" class="btn btn-primary" name="tambahpengeluaran">Simpan</button>
                   </form>
                     <a href="menu.php" class="batal">
                       <button type="batal" class="btn btn-default">Batal</button>

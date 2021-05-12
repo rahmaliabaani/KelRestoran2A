@@ -69,6 +69,12 @@
               </a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="meja.php">
+                <i class="fas fa-chair text-primary"></i>
+                <span class="nav-link-text">Meja</span>
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="stok.php">
                 <i class="ni ni-box-2 text-primary"></i>
                 <span class="nav-link-text">Stok Bahan</span>
@@ -304,12 +310,12 @@
                           <tr>
                             <td><?php echo $i++;?></td>
                             <td><?php echo $m['id_menu'];?></td>
-                            <td><?php echo $m['nama'];?></td>
+                            <td><?php echo $m['nama_menu'];?></td>
                             <td><?php echo $m['porsi'];?></td>
                             <td>Rp. <?php echo number_format($m['harga']);?></td>
                             <td><?php echo $m['status_menu'];?></td>
                             <td>
-                            <a href="keranjang.php" class="btn btn-default"><i class="ni ni-basket"></i></a>
+                            <a href="keranjang.php?id_menu=<?php echo $m['id_menu']; ?>" class="btn btn-default"><i class="ni ni-basket"></i></a>
                             </td>
                           </tr>
                           <?php } ?>

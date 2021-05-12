@@ -69,6 +69,12 @@
               </a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="meja.php">
+                <i class="fas fa-chair text-primary"></i>
+                <span class="nav-link-text">Meja</span>
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="stok.php">
                 <i class="ni ni-box-2 text-primary"></i>
                 <span class="nav-link-text">Stok Bahan</span>
@@ -302,17 +308,17 @@
                         </tr>
                       </thead>
                       <tbody class="list">
-                        <?php $i = 1; ?>
-                        <?php foreach ($pemasukan as $masuk) { ?>
+                        <!-- <?php $i = 1; ?> -->
+                        <?php foreach ($pemasukan as $p) { ?>
                           <tr>
                             <td><?php echo $i++; ?></td>
-                            <td><?php echo $masuk['jenis']; ?></td>
-                            <td><?php echo $masuk['keterangan']; ?></td>
-                            <td><?php echo $masuk['tanggal']; ?></td>
-                            <td>Rp. <?php echo number_format($masuk['jumlah']); ?></td>
+                            <td><?php echo $p['jenis']; ?></td>
+                            <td><?php echo $p['keterangan']; ?></td>
+                            <td><?php echo $p['tanggal']; ?></td>
+                            <td>Rp. <?php echo number_format($p['jumlah']); ?></td>
                             <td>
-                              <a href=""><i class="far fa-edit text-white"></i></a> |
-                              <a href=""><i class="far fa-trash-alt text-white"></i></a>
+                              <a href="ubahpemasukan.php?id_pemasukan=<?php echo $p['id_pemasukan']; ?>"><i class="far fa-edit text-white"></i></a> |
+                              <a href="hapuspemasukan.php?id_pemasukan=<?php echo $p['id_pemasukan']; ?>"><i class="far fa-trash-alt text-white"></i></a>
                             </td>
                           </tr>
                         <?php } ?>
@@ -357,8 +363,8 @@
                             <td><?php echo $luar['tanggal']; ?></td>
                             <td>Rp. <?php echo number_format($luar['jumlah']); ?></td>
                             <td>
-                              <a href=""><i class="far fa-edit text-white"></i></a> |
-                              <a href=""><i class="far fa-trash-alt text-white"></i></a>
+                              <a href="ubahpengeluaran.php?id_pengeluaran=<?php echo $luar['id_pengeluaran']; ?>"><i class="far fa-edit text-white"></i></a> |
+                              <a href="hapuspengeluaran.php?id_pengeluaran=<?php echo $luar['id_pengeluaran']; ?>"><i class="far fa-trash-alt text-white"></i></a>
                             </td>
                           </tr>
                         <?php } ?>

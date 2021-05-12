@@ -67,6 +67,12 @@
               </a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="meja.php">
+                <i class="ni ni-collection text-primary"></i>
+                <span class="nav-link-text">Meja</span>
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="examples/stok.php">
                 <i class="ni ni-box-2 text-primary"></i>
                 <span class="nav-link-text">Stok Bahan</span>

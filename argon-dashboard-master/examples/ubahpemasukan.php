@@ -1,29 +1,19 @@
 <?php 
 require 'functions.php';
 
-$id = $_GET['id_menu'];
-$menu = query("SELECT * FROM menu WHERE id_menu = '$id'");
+$id = $_GET['id_pemasukan'];
+$pemasukan = query("SELECT * FROM pemasukan WHERE id_pemasukan = '$id'");
 
-if (isset($_POST['tambahkeranjang'])) {
-  if (tambahkeranjang($_POST) > 0) {
-    echo "<script> document.location.href = 'keranjang2.php';
+if (isset($_POST['ubahpemasukan'])) {
+  if (ubahpemasukan($_POST) > 0) {
+    echo "<script> document.location.href = 'pemasukan_pengeluaran.php';
     </script>";
   } else {
-    echo "<script> document.location.href = 'beranda.php';
+    echo "<script> alert('gagal!');
+    document.location.href = 'beranda.php';
     </script>";
   }
-  
 }
-
-// mengambil data yg kodenya paling besar
-// $trans = query("SELECT max(id_transaksi) AS idTerbesar FROM transaksi");
-// $data = mysqli_fetch_array($trans);
-// $idtransaksi = $data['idTerbesar'];
-// $urutan = (int) substr($idtransaksi, 3, 3);
-// $urutan++;
-// $huruf = "TR-";
-// $idtransaksi = $huruf . sprintf("%03s", $urutan);
-
 ?>
 <!--
 =========================================================
@@ -48,7 +38,7 @@ if (isset($_POST['tambahkeranjang'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Transaksi</title>
+  <title>Pemasukan</title>
   <!-- Favicon -->
   <link rel="icon" href="../assets/img/brand/favicon.png" type="image/png">
   <!-- Fonts -->
@@ -59,6 +49,8 @@ if (isset($_POST['tambahkeranjang'])) {
   <!-- Page plugins -->
   <!-- Argon CSS -->
   <link rel="stylesheet" href="../assets/css/argon.css?v=1.2.0" type="text/css">
+  <!-- my css -->
+  <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 
 <body>
@@ -113,13 +105,13 @@ if (isset($_POST['tambahkeranjang'])) {
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="transaksi.php">
+              <a class="nav-link" href="transaksi.php">
                 <i class="ni ni-cart text-primary"></i>
                 <span class="nav-link-text">Transaksi</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pemasukan_pengeluaran.php">
+              <a class="nav-link active" href="pemasukan_pengeluaran.php">
                 <i class="ni ni-bullet-list-67 text-primary"></i>
                 <span class="nav-link-text">Pemasukan dan Pengeluaran</span>
               </a>
@@ -283,7 +275,7 @@ if (isset($_POST['tambahkeranjang'])) {
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-dark d-inline-block mb-0">Transaksi</h6>
+              <h6 class="h2 text-dark d-inline-block mb-0">Pemasukan</h6>
             </div>
           </div>
           <!-- transaksi -->
@@ -292,67 +284,51 @@ if (isset($_POST['tambahkeranjang'])) {
                 <div class="card-header">
                   <div class="row align-items-center">
                     <div class="col-10">
-                      <h3 class="mb-0">Data Pesanan </h3>
+                      <h3 class="mb-0">Ubah Pemasukan </h3>
                     </div>
                   </div>
                 </div>
                 <div class="card-body">
                   <form action="" method="POST">
                     <div class="pl-lg-2">
-                      <?php foreach ($menu as $m) { ?>
-                        <!-- id transaksi -->
-                        <label class="form-control-label" for="id_transaksi">ID transaksi</label>
-                        <input type="text" id="id_transaksi" class="form-control" name="id_transaksi">
-                      
+                      <?php foreach ($pemasukan as $p) { ?>
                       <div class="row">
+                        <!-- id -->
+                        <input type="hidden" id="id_pemasukan" class="form-control" name="id_pemasukan" value="<?php echo $p['id_pemasukan']; ?>">
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <label class="form-control-label" for="id">ID Menu</label>
-                            <input type="text" id="id_menu" class="form-control" name="id_menu" value="<?php echo $m['id_menu']; ?>" readonly>
-                          </div>
-                        </div>
-                        <!-- tanggal -->
-                        <!-- <label class="form-control-label" for="id">Tanggal</label> -->
-                        <input type="hidden" id="tanggal" class="form-control" name="tanggal" value="<?php echo date("Y-m-d");?>" readonly>
-                        
-                        <div class="col-lg-4">
-                          <div class="form-group">
-                            <label class="form-control-label" for="nama">Nama Menu</label>
-                            <input type="text" id="nama_menu" class="form-control" name="nama_menu" value="<?php echo $m['nama_menu']; ?>" readonly>
+                            <label class="form-control-label" for="jenis">Jenis</label>
+                            <input type="text" id="jenis" class="form-control" name="jenis" value="<?php echo $p['jenis']; ?>">
                           </div>
                         </div>
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <label class="form-control-label" for="porsi">Porsi</label>
-                            <input type="number" id="porsi" class="form-control" name="porsi" value="<?php echo $m['porsi']; ?>" readonly>
+                            <label class="form-control-label" for="keterangan">Keterangan</label>
+                            <input id="keterangan" class="form-control" name="keterangan" value="<?php echo $p['keterangan']; ?>">
                           </div>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <label class="form-control-label" for="harga">Harga</label>
-                            <input type="number" id="harga" class="form-control"  name="harga" value="<?php echo $m['harga']; ?>" readonly>
+                            <label class="form-control-label" for="tgl">Tanggal</label>
+                            <input type="date" id="tgl" class="form-control" name="tanggal" value="<?php echo $p['tanggal']; ?>">
                           </div>
                         </div>
                         <div class="col-lg-4">
                           <div class="form-group">
                             <label class="form-control-label" for="jumlah">Jumlah</label>
-                            <input type="number" id="jumlah" class="form-control" name="jumlah" >
-                          </div>
-                        </div>
-                        <div class="col-lg-4">
-                          <div class="form-group">
-                            <label class="form-control-label" for="subtotal">Subtotal</label>
-                            <input type="number" id="subtotal" class="form-control" name="subtotal">
+                            <input type="number" id="jumlah" class="form-control" name="jumlah" value="<?php echo $p['jumlah']; ?>">
                           </div>
                         </div>
                       </div>
                       <?php } ?>
                     </div>
-                      <button type="submit" class="btn btn-primary" name="tambahkeranjang">Simpan</button>
-                    <hr class="my-4" />
+                    <button type="submit" class="btn btn-primary" name="ubahpemasukan">Simpan</button>
                   </form>
+                    <a href="pemasukan_pengeluaran.php" class="batal">
+                      <button type="batal" class="btn btn-default">Batal</button>
+                    </a>
                 </div>
               </div>
             </div>

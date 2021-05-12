@@ -1,29 +1,6 @@
 <?php 
-require 'functions.php';
-
-$id = $_GET['id_menu'];
-$menu = query("SELECT * FROM menu WHERE id_menu = '$id'");
-
-if (isset($_POST['tambahkeranjang'])) {
-  if (tambahkeranjang($_POST) > 0) {
-    echo "<script> document.location.href = 'keranjang2.php';
-    </script>";
-  } else {
-    echo "<script> document.location.href = 'beranda.php';
-    </script>";
-  }
-  
-}
-
-// mengambil data yg kodenya paling besar
-// $trans = query("SELECT max(id_transaksi) AS idTerbesar FROM transaksi");
-// $data = mysqli_fetch_array($trans);
-// $idtransaksi = $data['idTerbesar'];
-// $urutan = (int) substr($idtransaksi, 3, 3);
-// $urutan++;
-// $huruf = "TR-";
-// $idtransaksi = $huruf . sprintf("%03s", $urutan);
-
+  require 'functions.php';
+  $meja = query("SELECT * FROM meja");
 ?>
 <!--
 =========================================================
@@ -48,7 +25,7 @@ if (isset($_POST['tambahkeranjang'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Transaksi</title>
+  <title>Meja Restaurant</title>
   <!-- Favicon -->
   <link rel="icon" href="../assets/img/brand/favicon.png" type="image/png">
   <!-- Fonts -->
@@ -59,6 +36,8 @@ if (isset($_POST['tambahkeranjang'])) {
   <!-- Page plugins -->
   <!-- Argon CSS -->
   <link rel="stylesheet" href="../assets/css/argon.css?v=1.2.0" type="text/css">
+  <!-- my css -->
+  <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 
 <body>
@@ -89,7 +68,7 @@ if (isset($_POST['tambahkeranjang'])) {
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="meja.php">
+              <a class="nav-link active" href="meja.php">
                 <i class="fas fa-chair text-primary"></i>
                 <span class="nav-link-text">Meja</span>
               </a>
@@ -113,7 +92,7 @@ if (isset($_POST['tambahkeranjang'])) {
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="transaksi.php">
+              <a class="nav-link" href="transaksi.php">
                 <i class="ni ni-cart text-primary"></i>
                 <span class="nav-link-text">Transaksi</span>
               </a>
@@ -271,6 +250,24 @@ if (isset($_POST['tambahkeranjang'])) {
                   </div>
                 </div>
               </a>
+              <div class="dropdown-menu  dropdown-menu-right ">
+                <div class="dropdown-header noti-title">
+                  <h6 class="text-overflow m-0">Welcome!</h6>
+                </div>
+                <a href="#!" class="dropdown-item">
+                  <i class="ni ni-single-02"></i>
+                  <span>My profile</span>
+                </a>
+                <a href="#!" class="dropdown-item">
+                  <i class="ni ni-settings-gear-65"></i>
+                  <span>Settings</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#!" class="dropdown-item">
+                  <i class="ni ni-user-run"></i>
+                  <span>Logout</span>
+                </a>
+              </div>
             </li>
           </ul>
         </div>
@@ -283,86 +280,53 @@ if (isset($_POST['tambahkeranjang'])) {
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-dark d-inline-block mb-0">Transaksi</h6>
+              <h6 class="h2 text-dark d-inline-block mb-0">Meja</h6>
             </div>
           </div>
-          <!-- transaksi -->
-            <div class="col-xl-10 order-xl-1 ml--3">
-              <div class="card">
-                <div class="card-header">
-                  <div class="row align-items-center">
-                    <div class="col-10">
-                      <h3 class="mb-0">Data Pesanan </h3>
-                    </div>
+          <a href="tambahmeja.php"><button type="submit" class="btn btn-primary mb-3"><i class="fas fa-chair"></i> Tambah Meja</button></a>
+            <!-- Dark table -->
+            <div class="row tabel-gelap">
+              <div class="col">
+                <div class="card bg-default shadow">
+                  <div class="card-header bg-transparent border-0">
+                    <h3 class="text-white mb-0">Meja</h3>
                   </div>
-                </div>
-                <div class="card-body">
-                  <form action="" method="POST">
-                    <div class="pl-lg-2">
-                      <?php foreach ($menu as $m) { ?>
-                        <!-- id transaksi -->
-                        <label class="form-control-label" for="id_transaksi">ID transaksi</label>
-                        <input type="text" id="id_transaksi" class="form-control" name="id_transaksi">
-                      
-                      <div class="row">
-                        <div class="col-lg-4">
-                          <div class="form-group">
-                            <label class="form-control-label" for="id">ID Menu</label>
-                            <input type="text" id="id_menu" class="form-control" name="id_menu" value="<?php echo $m['id_menu']; ?>" readonly>
-                          </div>
-                        </div>
-                        <!-- tanggal -->
-                        <!-- <label class="form-control-label" for="id">Tanggal</label> -->
-                        <input type="hidden" id="tanggal" class="form-control" name="tanggal" value="<?php echo date("Y-m-d");?>" readonly>
-                        
-                        <div class="col-lg-4">
-                          <div class="form-group">
-                            <label class="form-control-label" for="nama">Nama Menu</label>
-                            <input type="text" id="nama_menu" class="form-control" name="nama_menu" value="<?php echo $m['nama_menu']; ?>" readonly>
-                          </div>
-                        </div>
-                        <div class="col-lg-4">
-                          <div class="form-group">
-                            <label class="form-control-label" for="porsi">Porsi</label>
-                            <input type="number" id="porsi" class="form-control" name="porsi" value="<?php echo $m['porsi']; ?>" readonly>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-lg-4">
-                          <div class="form-group">
-                            <label class="form-control-label" for="harga">Harga</label>
-                            <input type="number" id="harga" class="form-control"  name="harga" value="<?php echo $m['harga']; ?>" readonly>
-                          </div>
-                        </div>
-                        <div class="col-lg-4">
-                          <div class="form-group">
-                            <label class="form-control-label" for="jumlah">Jumlah</label>
-                            <input type="number" id="jumlah" class="form-control" name="jumlah" >
-                          </div>
-                        </div>
-                        <div class="col-lg-4">
-                          <div class="form-group">
-                            <label class="form-control-label" for="subtotal">Subtotal</label>
-                            <input type="number" id="subtotal" class="form-control" name="subtotal">
-                          </div>
-                        </div>
-                      </div>
-                      <?php } ?>
-                    </div>
-                      <button type="submit" class="btn btn-primary" name="tambahkeranjang">Simpan</button>
-                    <hr class="my-4" />
-                  </form>
+                  <div class="table-responsive">
+                    <table class="table align-items-center table-dark table-flush">
+                      <thead class="thead-dark">
+                        <tr>
+                          <th scope="col" class="sort" data-sort="name">#</th>
+                          <th scope="col" class="sort" data-sort="name">ID Meja</th>
+                          <th scope="col" class="sort" data-sort="status">Status</th>
+                          <th scope="col" class="sort" data-sort="budget">Aksi</th>
+                        </tr>
+                      </thead>
+                      <tbody class="list">
+                        <?php $i = 1; ?>
+                          <?php foreach ($meja as $mj) { ?>
+                          <tr>
+                            <td><?php echo $i++;?></td>
+                            <td><?php echo $mj['id_meja'];?></td>
+                            <td><?php echo $mj['status'];?></td>
+                            <td>
+                            <a href="ubahmeja.php?id_meja=<?php echo $mj['id_meja']; ?>"><i class="far fa-edit text-white"></i></a> |
+                            <a href="hapusmeja.php?id_meja=<?php echo $mj['id_meja']; ?>"><i class="far fa-trash-alt text-white"></i></a>
+                            </td>
+                          </tr>
+                          <?php } ?>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
-            <!-- akhir -->
+            <!-- akhir tabel -->
         </div>
       </div>
     </div>
     <!-- Page content -->
     <div class="container-fluid mt--6">
-    <!-- Footer -->
+      <!-- Footer -->
       <footer class="footer pt-0">
         <div class="row align-items-center justify-content-lg-between">
           <div class="col-lg-6">
@@ -382,8 +346,7 @@ if (isset($_POST['tambahkeranjang'])) {
   <script src="../assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
   <script src="../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
   <!-- Optional JS -->
-  <script src="../assets/vendor/chart.js/dist/Chart.min.js"></script>
-  <script src="../assets/vendor/chart.js/dist/Chart.extension.js"></script>
+  <script src="../assets/vendor/clipboard/dist/clipboard.min.js"></script>
   <!-- Argon JS -->
   <script src="../assets/js/argon.js?v=1.2.0"></script>
 </body>

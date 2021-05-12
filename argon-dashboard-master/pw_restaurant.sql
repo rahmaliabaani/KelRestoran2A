@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 06 Bulan Mei 2021 pada 09.38
+-- Waktu pembuatan: 12 Bulan Mei 2021 pada 03.24
 -- Versi server: 10.1.34-MariaDB
 -- Versi PHP: 7.2.7
 
@@ -35,8 +35,18 @@ CREATE TABLE `detail` (
   `nama_menu` varchar(50) NOT NULL,
   `porsi` int(11) NOT NULL,
   `harga` int(11) NOT NULL,
+  `jumlah` int(11) NOT NULL,
   `subtotal` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `detail`
+--
+
+INSERT INTO `detail` (`id_transaksi`, `id_menu`, `tanggal`, `nama_menu`, `porsi`, `harga`, `jumlah`, `subtotal`) VALUES
+('TR-001', 'M-001', '2021-05-11', 'Pecel ayam', 1, 25000, 1, 25000),
+('TR-001', 'M-004', '2021-05-11', 'Gulai Ayam', 1, 25000, 2, 50000),
+('TR-002', 'M-002', '2021-05-11', 'Ayam Bakar', 1, 25000, 3, 75000);
 
 -- --------------------------------------------------------
 
@@ -51,6 +61,7 @@ CREATE TABLE `keranjang` (
   `nama_menu` varchar(50) NOT NULL,
   `porsi` int(11) NOT NULL,
   `harga` int(11) NOT NULL,
+  `jumlah` int(11) NOT NULL,
   `subtotal` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -65,6 +76,13 @@ CREATE TABLE `meja` (
   `status` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `meja`
+--
+
+INSERT INTO `meja` (`id_meja`, `status`) VALUES
+('MJ-01', 'GGGGG');
+
 -- --------------------------------------------------------
 
 --
@@ -73,7 +91,7 @@ CREATE TABLE `meja` (
 
 CREATE TABLE `menu` (
   `id_menu` varchar(5) NOT NULL,
-  `nama` varchar(50) NOT NULL,
+  `nama_menu` varchar(50) NOT NULL,
   `porsi` int(11) NOT NULL,
   `harga` int(11) NOT NULL,
   `status_menu` varchar(10) NOT NULL,
@@ -85,7 +103,7 @@ CREATE TABLE `menu` (
 -- Dumping data untuk tabel `menu`
 --
 
-INSERT INTO `menu` (`id_menu`, `nama`, `porsi`, `harga`, `status_menu`, `estimasi_waktu_buat`, `gambar`) VALUES
+INSERT INTO `menu` (`id_menu`, `nama_menu`, `porsi`, `harga`, `status_menu`, `estimasi_waktu_buat`, `gambar`) VALUES
 ('M-001', 'Pecel ayam', 1, 25000, 'Ada', '00:10:00', 'pecelayam.jpg'),
 ('M-002', 'Ayam Bakar', 1, 25000, 'Ada', '00:10:00', 'ayambakar.jpg'),
 ('M-003', 'Ayam Geprek', 1, 25000, 'Ada', '00:10:00', 'ayamgeprek.jpg'),
@@ -153,7 +171,8 @@ CREATE TABLE `pemasukan` (
 
 INSERT INTO `pemasukan` (`id_pemasukan`, `jenis`, `keterangan`, `tanggal`, `jumlah`) VALUES
 (1, 'Uang', 'Hasil penjualan', '2021-04-15', 2000000),
-(2, 'Uang', 'Hasil penjualan', '2021-04-14', 2000000);
+(2, 'Uang', 'Hasil penjualan', '2021-04-14', 2000000),
+(4, 'uang', 'gada', '2021-05-11', 200);
 
 -- --------------------------------------------------------
 
@@ -175,7 +194,8 @@ CREATE TABLE `pengeluaran` (
 
 INSERT INTO `pengeluaran` (`id_pengeluaran`, `jenis`, `keterangan`, `tanggal`, `jumlah`) VALUES
 (1, 'Uang', 'Gaji pegawai', '2021-04-15', 7000000),
-(2, 'Uang', 'Beli stok', '2021-04-14', 1000000);
+(2, 'Uang', 'Beli stok', '2021-04-14', 1000000),
+(3, 'g', 'gggg', '2021-05-11', 4545);
 
 -- --------------------------------------------------------
 
@@ -250,11 +270,27 @@ CREATE TABLE `transaksi` (
 --
 
 INSERT INTO `transaksi` (`id_transaksi`, `id_pegawai`, `id_meja`, `nama_pelanggan`, `tanggal`, `total_bayar`, `pajak`, `tunai`, `kembali`) VALUES
-('TR-001', 'P-004', 'M-001', 'Sitta', '2021-04-15', 53000, 3000, 100000, 47000),
-('TR-002', 'P-004', 'M-002', 'Rahma', '2021-04-15', 23000, 3000, 50000, 27000),
-('TR-003', 'P-004', 'M-003', 'Bunga', '2021-04-15', 33000, 3000, 50000, 17000),
-('TR-004', 'P-004', 'M-004', 'Sari', '2021-04-15', 38000, 3000, 50000, 12000),
-('TR-005', 'P-004', 'M-005', 'Nadia', '2021-04-15', 18000, 3000, 20000, 2000);
+('TR-001', 'P-005', 'MJ-01', 'sitta', '2021-05-11', 78000, 3000, 100000, 12000),
+('TR-002', 'P-005', 'MJ-02', 'bb', '2021-05-11', 78000, 3000, 100000, 12000);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `user`
+--
+
+CREATE TABLE `user` (
+  `id_pegawai` varchar(7) NOT NULL,
+  `username` varchar(64) NOT NULL,
+  `password` varchar(256) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `user`
+--
+
+INSERT INTO `user` (`id_pegawai`, `username`, `password`) VALUES
+('P-001', 'rahma', '123');
 
 --
 -- Indexes for dumped tables
@@ -327,6 +363,12 @@ ALTER TABLE `transaksi`
   ADD PRIMARY KEY (`id_transaksi`);
 
 --
+-- Indeks untuk tabel `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id_pegawai`);
+
+--
 -- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
@@ -334,13 +376,13 @@ ALTER TABLE `transaksi`
 -- AUTO_INCREMENT untuk tabel `pemasukan`
 --
 ALTER TABLE `pemasukan`
-  MODIFY `id_pemasukan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_pemasukan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `pengeluaran`
 --
 ALTER TABLE `pengeluaran`
-  MODIFY `id_pengeluaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_pengeluaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

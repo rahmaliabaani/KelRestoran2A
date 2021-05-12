@@ -70,6 +70,12 @@
               </a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="meja.php">
+                <i class="fas fa-chair text-primary"></i>
+                <span class="nav-link-text">Meja</span>
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="stok.php">
                 <i class="ni ni-box-2 text-primary"></i>
                 <span class="nav-link-text">Stok Bahan</span>
@@ -246,24 +252,6 @@
                   </div>
                 </div>
               </a>
-              <div class="dropdown-menu  dropdown-menu-right ">
-                <div class="dropdown-header noti-title">
-                  <h6 class="text-overflow m-0">Welcome!</h6>
-                </div>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-single-02"></i>
-                  <span>My profile</span>
-                </a>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-settings-gear-65"></i>
-                  <span>Settings</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-user-run"></i>
-                  <span>Logout</span>
-                </a>
-              </div>
             </li>
           </ul>
         </div>

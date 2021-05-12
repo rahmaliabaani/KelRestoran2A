@@ -1,4 +1,29 @@
+<?php 
+session_start();
+require 'functions.php';
 
+// login
+if (isset($_POST['submit'])) {
+  $username = $_POST['username'];
+  $password = $_POST['password'];
+  $cek_user = mysqli_query(koneksi(), "SELECT * FROM user WHERE username = '$username' AND password = '$password'");
+  // mencocokan username dan password
+  if (mysqli_num_rows($cek_user) > 0) {
+    $row = mysqli_fetch_assoc($cek_user);
+    if ($password == $row['password']) {
+      $_SESSION['username'] = $_POST['username'];
+      $_SESSION['hash'] = $row['id_pegawai'];
+    }
+    if ($row['id_pegawai'] == $_SESSION['hash']) {
+      header("Location: beranda.php");
+      die();
+    }
+    header("Location: login.php");
+    die();
+  }
+  $error = true;
+}
+?>
 <!--
 =========================================================
 * Argon Dashboard - v1.2.0
@@ -115,7 +140,12 @@
             	<div class="col-lg-5 col-md-7">
 		          <div class="card bg-secondary border-0 mb-0">
 		            <div class="card-body px-lg-5 py-lg-5">
-		              <form role="form">
+		              <form action="" method="POST">
+                    <?php if (isset($error)) { ?>
+                      <div class="alert alert-danger alert-message" role="alert" >
+                        Username atau Password salah!
+                      </div>
+                    <?php } ?>
 		                <div class="form-group mb-3">
 		                  <div class="input-group input-group-merge input-group-alternative">
 		                    <div class="input-group-prepend">
@@ -139,7 +169,7 @@
 		                  </label>
 		                </div>
 		                <div class="text-center">
-		                  <button type="submit" class="btn btn-primary my-4"><a href="beranda.php" class="text-white">Sign in</a></button>
+		                  <button type="submit" class="btn btn-primary my-4" name="submit">Sign in</button>
 		                </div>
 		              </form>
 		            </div>
@@ -171,6 +201,7 @@
   <script src="../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
   <!-- Argon JS -->
   <script src="../assets/js/argon.js?v=1.2.0"></script>
+  <script src="../assets/js/script.js"></script>
 </body>
 
 </html>

@@ -1,3 +1,20 @@
+<?php 
+require 'functions.php';
+
+$menu = query("SELECT * FROM menu");
+$keranjang = query("SELECT * FROM keranjang");
+
+if (isset($_POST['tambahtransaksi'])) {
+  if (tambahtransaksi($_POST) > 0) {
+    echo "<script> document.location.href = 'transaksi.php';
+    </script>";
+  } else {
+    echo "<script> document.location.href = 'beranda.php';
+    </script>";
+  }
+  
+}
+?>
 <!--
 =========================================================
 * Argon Dashboard - v1.2.0
@@ -59,6 +76,12 @@
               <a class="nav-link" href="menu.php">
                 <i class="ni ni-collection text-primary"></i>
                 <span class="nav-link-text">Menu Restaurant</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="meja.php">
+                <i class="fas fa-chair text-primary"></i>
+                <span class="nav-link-text">Meja</span>
               </a>
             </li>
             <li class="nav-item">
@@ -238,24 +261,6 @@
                   </div>
                 </div>
               </a>
-              <div class="dropdown-menu  dropdown-menu-right ">
-                <div class="dropdown-header noti-title">
-                  <h6 class="text-overflow m-0">Welcome!</h6>
-                </div>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-single-02"></i>
-                  <span>My profile</span>
-                </a>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-settings-gear-65"></i>
-                  <span>Settings</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-user-run"></i>
-                  <span>Logout</span>
-                </a>
-              </div>
             </li>
           </ul>
         </div>
@@ -284,6 +289,7 @@
                       <table id="zero_config" class="table table-striped table-bordered">
                         <thead>
                           <tr>
+                            <th>#</th>
                             <th>ID Menu</th>
                             <th>Nama Menu</th>
                             <th>Porsi</th>
@@ -291,17 +297,20 @@
                             <th>Status Menu</th>
                             <th>Opsi</th>
                           </tr>
-                      
+                          <?php $i = 1; ?>
+                          <?php foreach ($menu as $m) { ?>
                           <tr>
-                            <td>M-001</td>
-                            <td>Soto Bandung</td>
-                            <td>1</td>
-                            <td>Rp. 15000</td>
-                            <td>Ada</td>
+                            <td><?php echo $i++;?></td>
+                            <td><?php echo $m['id_menu'];?></td>
+                            <td><?php echo $m['nama_menu'];?></td>
+                            <td><?php echo $m['porsi'];?></td>
+                            <td>Rp. <?php echo number_format($m['harga']);?></td>
+                            <td><?php echo $m['status_menu'];?></td>
                             <td>
-                            <a href="keranjang.php" class="btn btn-dark"><i class="ni ni-basket"></i></a>
+                            <a href="keranjang.php?id_menu=<?php echo $m['id_menu']; ?>" class="btn btn-default"><i class="ni ni-basket"></i></a>
                             </td>
                           </tr>
+                          <?php } ?>
                         </thead>
                       </table>
                     </div>
@@ -327,28 +336,31 @@
                                 <tr>
                                   <th scope="col" class="sort" data-sort="name">#</th>
                                   <th scope="col" class="sort" data-sort="budget">ID Menu</th>
-                                  <th scope="col" class="sort" data-sort="status">Nama Menu</th>
-                                  <th scope="col">Porsi</th>
+                                  <th scope="col" class="sort" data-sort="status">Nama</th>
+                                  <th scope="col" class="sort" data-sort="completion">Porsi</th>
                                   <th scope="col" class="sort" data-sort="completion">Harga</th>
-                                  <th scope="col">Jumlah</th>
-                                  <th scope="col">Subtotal</th>
-                                  <th scope="col">Opsi</th>
+                                  <th scope="col" class="sort" data-sort="completion">Jumlah</th>
+                                  <th scope="col" class="sort" data-sort="completion">Subtotal</th>
+                                  <th scope="col" class="sort" data-sort="completion">Opsi</th>
                                 </tr>
                               </thead>
                               <tbody class="list">
-                                <tr>
-                                  <td>1.</td>
-                                  <td>M-001</td>
-                                  <td>Soto Bandung</td>
-                                  <td>1</td>
-                                  <td>15000</td>
-                                  <td>1</td>
-                                  <td>15000</td>
-                                  <td>
-                                    <a href=""><i class="far fa-edit text-white"></i></a> |
-                                    <a href=""><i class="far fa-trash-alt text-white"></i></a>
-                                  </td>
-                                </tr>
+                                <?php $i = 1; ?>
+                                <?php foreach ($keranjang as $k) { ?>
+                                  <tr>
+                                    <td><?php echo $i++; ?></td>
+                                    <td><?php echo $k['id_menu']; ?></td>
+                                    <td><?php echo $k['nama_menu']; ?></td>
+                                    <td><?php echo $k['porsi']; ?></td>
+                                    <td><?php echo $k['harga']; ?></td>
+                                    <td><?php echo $k['jumlah']; ?></td>
+                                    <td><?php echo $k['subtotal']; ?></td>
+                                    <td>
+                                      <a href="ubahkeranjang.php?id_menu=<?php echo $k['id_menu']; ?>"><i class="far fa-edit text-white"></i></a> |
+                                      <a href="hapuskeranjang.php?id_menu=<?php echo $k['id_menu']; ?>"><i class="far fa-trash-alt text-white"></i></a>
+                                    </td>
+                                  </tr>
+                                <?php } ?>
                               </tbody>
                             </table>
                           </div>
@@ -358,36 +370,52 @@
              <!-- akhir tabel -->
 
                 <div class="card-body">
-                  <form action="transaksi.php">
+                  <form action="" method="POST">
                     <div class="pl-lg-2">
                       <div class="row">
                         <div class="col-lg-3">
+          <input type="text" class="form-control" name="id_transaksi">
+
                           <div class="form-group">
-                            <label class="form-control-label" for="namapelanggan">Atas Nama Pelanggan</label>
-                            <input type="text" id="namapelanggan" class="form-control">
+                            <label class="form-control-label" for="nama_pelanggan">Atas Nama Pelanggan</label>
+                            <input type="text" id="nama_pelanggan" class="form-control" name="nama_pelanggan">
+                          </div>
+                          <div class="form-group mt--3">
+                            <label class="form-control-label" for="id_meja">Id meja</label>
+                            <input type="text" id="id_meja" class="form-control" name="id_meja">
                           </div>
                         </div>
                         <div class="col-lg-3">
                           <div class="form-group">
-                            <label class="form-control-label" for="totalbayar">Total Bayar</label>
-                            <input type="number" id="totalbayar" class="form-control">
+                            <label class="form-control-label" for="total_bayar">Total bayar</label>
+                            <input type="number" id="total_bayar" class="form-control" name="total_bayar">
+                          </div>
+                          <div class="form-group mt--3">
+                            <label class="form-control-label" for="pajak">Pajak</label>
+                            <input type="number" id="pajak" class="form-control" name="pajak">
+                          </div>
+                          <div class="form-group mt--3">
+                            <label class="form-control-label" for="tanggal">Tanggal</label>
+                            <input type="date" id="tanggal" class="form-control" value="<?php echo date("Y-m-d");?>" name="tanggal">
                           </div>
                         </div>
                         <div class="col-lg-3">
                           <div class="form-group">
                             <label class="form-control-label" for="tunai">Tunai(Rp)</label>
-                            <input type="number" id="tunai" class="form-control">
+                            <input type="number" id="tunai" class="form-control" name="tunai">
                           </div>
-                        </div>
-                        <div class="col-lg-3">
-                          <div class="form-group">
+                          <div class="form-group mt--3">
                             <label class="form-control-label" for="kembali">Kembali</label>
-                            <input type="number" id="kembali" class="form-control">
+                            <input type="number" id="kembali" class="form-control" name="kembali">
+                          </div>
+                          <div class="form-group mt--3">
+                            <label class="form-control-label" for="id_pegawai">Id pegawai</label>
+                            <input type="text" id="id_pegawai" class="form-control" name="id_pegawai">
                           </div>
                         </div>
                       </div>
 
-                      <button class="btn btn-default">Bayar</button>
+                      <button class="btn btn-default" name="tambahtransaksi" type="submit">Bayar</button>
                         
                       <button class="btn btn-primary">Cetak</button>
                     </div>
