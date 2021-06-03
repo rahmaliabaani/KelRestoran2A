@@ -1,6 +1,18 @@
 <?php 
-  require 'functions.php';
-  $menu = query("SELECT * FROM menu");
+session_start();
+
+if (!isset($_SESSION["username"])) {
+  header("Location: login.php");
+  exit();
+}
+
+require 'functions.php';
+$menu = query("SELECT * FROM menu");
+
+  // ketika tombol cari diklik
+if (isset($_POST['carimenu'])) {
+  $menu = carimenu($_POST['keyword']);
+}
 ?>
 <!--
 =========================================================
@@ -98,10 +110,24 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pemasukan_pengeluaran.php">
+              <a class="nav-link" data-toggle="collapse" href="#dua">
                 <i class="ni ni-bullet-list-67 text-primary"></i>
                 <span class="nav-link-text">Pemasukan dan Pengeluaran</span>
               </a>
+              <div class="collapse" id="dua">
+                <ul class="nav nav-collapse">
+                  <li class="nav-item">
+                    <a href="pemasukan.php" class="nav-link">
+                      <span class="nav-link-text">Data Pemasukan</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="pengeluaran.php" class="nav-link">
+                      <span class="nav-link-text">Data Pengeluaran</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#tables">
@@ -146,8 +172,8 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanomset.php" class="nav-link">
-                      <span class="nav-link-text">Data Omset</span>
+                    <a href="laporankeuntungan.php" class="nav-link">
+                      <span class="nav-link-text">Data Keuntungan</span>
                     </a>
                   </li>
                 </ul>
@@ -167,13 +193,14 @@
       <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Search form -->
-          <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
+          <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main" action="" method="POST">
             <div class="form-group mb-0">
               <div class="input-group input-group-alternative input-group-merge">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-search"></i></span>
                 </div>
-                <input class="form-control" placeholder="Search" type="text">
+                <input class="keyword form-control" placeholder="Search" type="text" name="keyword" autocomplete="off">
+                <button type="submit" class="tombol-cari btn" name="carimenu"></button>
               </div>
             </div>
             <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
@@ -246,7 +273,7 @@
                     <img alt="Image placeholder" src="../assets/img/theme/team-4.jpg">
                   </span>
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
+                    <span class="mb-0 text-sm  font-weight-bold"><?php echo $_SESSION["username"]; ?></span>
                   </div>
                 </div>
               </a>
@@ -263,7 +290,7 @@
                   <span>Settings</span>
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="#!" class="dropdown-item">
+                <a href="logout.php" onclick="return confirm('Anda yakin akan keluar?')" class="dropdown-item">
                   <i class="ni ni-user-run"></i>
                   <span>Logout</span>
                 </a>
@@ -291,7 +318,7 @@
                   <div class="card-header bg-transparent border-0">
                     <h3 class="text-white mb-0">Menu</h3>
                   </div>
-                  <div class="table-responsive">
+                  <div class="hasil-cari table-responsive">
                     <table class="table align-items-center table-dark table-flush">
                       <thead class="thead-dark">
                         <tr>
@@ -300,7 +327,7 @@
                           <th scope="col" class="sort" data-sort="status">Nama</th>
                           <th scope="col" class="sort" data-sort="budget">Porsi</th>
                           <th scope="col" class="sort" data-sort="status">Harga </th>
-                          <th scope="col" class="sort" data-sort="budget">Status menu</th>
+                          <th scope="col" class="sort" data-sort="status">Stok </th>
                           <th scope="col" class="sort" data-sort="budget">Foto</th>
                           <th scope="col" class="sort" data-sort="budget">Aksi</th>
                         </tr>
@@ -313,12 +340,13 @@
                             <td><?php echo $m['id_menu'];?></td>
                             <td><?php echo $m['nama_menu'];?></td>
                             <td><?php echo $m['porsi'];?></td>
-                            <td>Rp. <?php echo number_format($m['harga']);?></td>
+                            <td>Rp. <?php echo number_format($m['harga_jual']);?></td>
                             <td><?php echo $m['status_menu'];?></td>
                             <td><img src="../assets/img/<?php echo $m['gambar']; ?>" alt=""></td>
                             <td>
-                            <a href=""><i class="far fa-edit text-white"></i></a> |
-                            <a href=""><i class="far fa-trash-alt text-white"></i></a>
+                            <a href="ubahmenu.php?id_menu=<?php echo $m['id_menu']; ?>" onclick="return confirm('Ubah data menu?')"><i class="far fa-edit text-white"></i></a> |
+                            <a href="hapusmenu.php?id_menu=<?php echo $m['id_menu']; ?>" onclick="return confirm('Hapus data menu?')"><i class="far fa-trash-alt text-white"></i></a> |
+                            <a href="detailmenu.php?id_menu=<?php echo $m['id_menu']; ?>" class="text-white">Detail</a>
                             </td>
                           </tr>
                           <?php } ?>
@@ -357,6 +385,8 @@
   <script src="../assets/vendor/clipboard/dist/clipboard.min.js"></script>
   <!-- Argon JS -->
   <script src="../assets/js/argon.js?v=1.2.0"></script>
+  <!-- my js -->
+  <script src="../assets/js/script_menu.js"></script>
 </body>
 
 </html>

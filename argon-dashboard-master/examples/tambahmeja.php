@@ -1,9 +1,17 @@
-<?php 
-require 'functions.php';
+<?php
+session_start();
 
+if (!isset($_SESSION["username"])) {
+  header("Location: login.php");
+  exit();
+}
+
+require 'functions.php';
 if (isset($_POST['tambahmeja'])) {
   if (tambahmeja($_POST) > 0) {
-    echo "<script> document.location.href = 'meja.php';
+    echo "<script> 
+    alert('Data berhasil ditambah!'); 
+    document.location.href = 'meja.php';
     </script>";
   } else {
     echo "<script> document.location.href = 'beranda.php';
@@ -11,6 +19,26 @@ if (isset($_POST['tambahmeja'])) {
   }
   
 }
+// kode otomatis meja
+  $conn = koneksi();
+  // mengambil data barang dengan kode paling besar
+  $mj = mysqli_query($conn,"SELECT max(id_meja) as kodeTerbesar FROM meja");
+  $data = mysqli_num_rows($mj);
+  while ($data = mysqli_fetch_array($mj)) {
+  $kodeMeja = $data['kodeTerbesar'];
+  // mengambil angka dari kode barang terbesar, menggunakan fungsi substr
+  // dan diubah ke integer dengan (int)
+  $urutan = (int) substr($kodeMeja, 3, 3);
+  // bilangan yang diambil ini ditambah 1 untuk menentukan nomor urut berikutnya
+  $urutan++;
+   
+  // membentuk kode barang baru
+  // perintah sprintf("%03s", $urutan); berguna untuk membuat string menjadi 3 karakter
+  // misalnya perintah sprintf("%03s", 15); maka akan menghasilkan '015'
+  // angka yang diambil tadi digabungkan dengan kode huruf yang kita inginkan, misalnya BRG 
+  $huruf = "MJ-";
+  $kodeMeja = $huruf . sprintf("%03s", $urutan);
+  }
 ?>
 <!--
 =========================================================
@@ -108,10 +136,24 @@ if (isset($_POST['tambahmeja'])) {
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pemasukan_pengeluaran.php">
+              <a class="nav-link" data-toggle="collapse" href="#dua">
                 <i class="ni ni-bullet-list-67 text-primary"></i>
                 <span class="nav-link-text">Pemasukan dan Pengeluaran</span>
               </a>
+              <div class="collapse" id="dua">
+                <ul class="nav nav-collapse">
+                  <li class="nav-item">
+                    <a href="pemasukan.php" class="nav-link">
+                      <span class="nav-link-text">Data Pemasukan</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="pengeluaran.php" class="nav-link">
+                      <span class="nav-link-text">Data Pengeluaran</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#tables">
@@ -156,8 +198,8 @@ if (isset($_POST['tambahmeja'])) {
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanomset.php" class="nav-link">
-                      <span class="nav-link-text">Data Omset</span>
+                    <a href="laporankeuntungan.php" class="nav-link">
+                      <span class="nav-link-text">Data Keuntungan</span>
                     </a>
                   </li>
                 </ul>
@@ -250,16 +292,14 @@ if (isset($_POST['tambahmeja'])) {
           </ul>
           <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
             <li class="nav-item dropdown">
-              <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="media align-items-center">
                   <span class="avatar avatar-sm rounded-circle">
                     <img alt="Image placeholder" src="../assets/img/theme/team-4.jpg">
                   </span>
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
+                    <span class="mb-0 text-sm  font-weight-bold text-white"><?php echo $_SESSION["username"]; ?></span>
                   </div>
                 </div>
-              </a>
             </li>
           </ul>
         </div>
@@ -292,13 +332,13 @@ if (isset($_POST['tambahmeja'])) {
                         <div class="col-lg-4">
                           <div class="form-group">
                             <label class="form-control-label" for="id_meja">ID Meja</label>
-                            <input type="text" id="id_meja" name="id_meja" class="form-control">
+                            <input type="text" id="id_meja" name="id_meja" class="form-control" value="<?php echo $kodeMeja; ?>" readonly>
                           </div>
                         </div>
                         <div class="col-lg-4">
                           <div class="form-group">
                             <label class="form-control-label" for="status">Status</label>
-                            <input type="text" id="status" name="status" class="form-control">
+                            <input type="text" id="status" name="status" class="form-control" required autocomplete="off">
                           </div>
                         </div>
                       </div>

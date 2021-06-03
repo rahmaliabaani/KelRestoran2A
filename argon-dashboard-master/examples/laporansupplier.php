@@ -1,4 +1,11 @@
 <?php 
+session_start();
+
+if (!isset($_SESSION["username"])) {
+  header("Location: login.php");
+  exit();
+}
+
   require 'functions.php';
   $supplier = query("SELECT * FROM supplier");
 ?>
@@ -96,10 +103,24 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pemasukan_pengeluaran.php">
+              <a class="nav-link" data-toggle="collapse" href="#dua">
                 <i class="ni ni-bullet-list-67 text-primary"></i>
                 <span class="nav-link-text">Pemasukan dan Pengeluaran</span>
               </a>
+              <div class="collapse" id="dua">
+                <ul class="nav nav-collapse">
+                  <li class="nav-item">
+                    <a href="pemasukan.php" class="nav-link">
+                      <span class="nav-link-text">Data Pemasukan</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="pengeluaran.php" class="nav-link">
+                      <span class="nav-link-text">Data Pengeluaran</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li class="nav-item">
               <a class="nav-link active" data-toggle="collapse" href="#tables">
@@ -144,8 +165,8 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanomset.php" class="nav-link">
-                      <span class="nav-link-text">Data Omset</span>
+                    <a href="laporankeuntungan.php" class="nav-link">
+                      <span class="nav-link-text">Data Keuntungan</span>
                     </a>
                   </li>
                 </ul>
@@ -238,34 +259,14 @@
           </ul>
           <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
             <li class="nav-item dropdown">
-              <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="media align-items-center">
                   <span class="avatar avatar-sm rounded-circle">
                     <img alt="Image placeholder" src="../assets/img/theme/team-4.jpg">
                   </span>
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
+                    <span class="mb-0 text-sm  font-weight-bold text-white"><?php echo $_SESSION["username"]; ?></span>
                   </div>
                 </div>
-              </a>
-              <div class="dropdown-menu  dropdown-menu-right ">
-                <div class="dropdown-header noti-title">
-                  <h6 class="text-overflow m-0">Welcome!</h6>
-                </div>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-single-02"></i>
-                  <span>My profile</span>
-                </a>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-settings-gear-65"></i>
-                  <span>Settings</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-user-run"></i>
-                  <span>Logout</span>
-                </a>
-              </div>
             </li>
           </ul>
         </div>
@@ -281,48 +282,10 @@
               <h6 class="h2 text-dark d-inline-block mb-0">Laporan</h6>
             </div>
           </div>
-      <!-- cetak supplier -->
-          <button class="btn btn-primary mb-3"><i class="fas fa-print"></i> Cetak Laporan</button>
-          <!-- Dark table -->
-            <div class="row">
-              <div class="col">
-                <div class="card bg-default shadow">
-                  <div class="card-header bg-transparent border-0">
-                    <h3 class="text-white mb-0">Data Supplier</h3>
-                  </div>
-                  <div class="table-responsive">
-                    <table class="table align-items-center table-dark table-flush">
-                      <thead class="thead-dark">
-                        <tr>
-                          <th scope="col" class="sort" data-sort="name">#</th>
-                          <th scope="col" class="sort" data-sort="budget">ID Supplier</th>
-                          <th scope="col" class="sort" data-sort="status">Nama</th>
-                          <th scope="col" class="sort" data-sort="completion">Jenis</th>
-                          <th scope="col" class="sort" data-sort="completion">Alamat</th>
-                          <th scope="col" class="sort" data-sort="completion">No telepon</th>
-                          <th scope="col" class="sort" data-sort="completion">Email</th>
-                        </tr>
-                      </thead>
-                      <tbody class="list">
-                        <?php $i = 1; ?>
-                        <?php foreach ($supplier as $sup) { ?>
-                          <tr>
-                            <td><?php echo $i++; ?></td>
-                            <td><?php echo $sup['id_supplier']; ?></td>
-                            <td><?php echo $sup['nama']; ?></td>
-                            <td><?php echo $sup['jenis']; ?></td>
-                            <td><?php echo $sup['alamat']; ?></td>
-                            <td><?php echo $sup['no_telepon']; ?></td>
-                            <td><?php echo $sup['email']; ?></td>
-                          </tr>
-                        <?php } ?>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-      <!-- akhir tabel -->
+          <!-- cetak supplier -->
+          <a href="cetaksupplier.php"><button class="btn btn-primary mb-3"><i class="fas fa-print"></i> Cetak Laporan</button></a>
+          <br>
+          <embed src="cetaksupplier.php" type="application/pdf" width="600" height="400">
         </div>
       </div>
     </div>

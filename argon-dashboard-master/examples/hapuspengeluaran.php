@@ -6,7 +6,7 @@ $id = $_GET['id_pengeluaran'];
 if (hapuspengeluaran($id) > 0) {
 	echo "<script>
 			alert('Data berhasil dihapus!');
-			document.location.href = 'pemasukan_pengeluaran.php';
+			document.location.href = 'pengeluaran.php';
 		</script>";
 } else {
 	echo "<script>

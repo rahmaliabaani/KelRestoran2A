@@ -1,8 +1,16 @@
 <?php 
+session_start();
+
+if (!isset($_SESSION["username"])) {
+  header("Location: login.php");
+  exit();
+}
+
 require 'functions.php';
 
 $menu = query("SELECT * FROM menu");
 $keranjang = query("SELECT * FROM keranjang");
+$meja = query("SELECT id_meja FROM meja WHERE status = 'Kosong' OR status = 'kosong'");
 
 if (isset($_POST['tambahtransaksi'])) {
   if (tambahtransaksi($_POST) > 0) {
@@ -14,6 +22,27 @@ if (isset($_POST['tambahtransaksi'])) {
   }
   
 }
+
+// kode otomatis meja
+  $conn = koneksi();
+  // mengambil data barang dengan kode paling besar
+  $tr = mysqli_query($conn,"SELECT max(id_transaksi) as kodeTerbesar FROM transaksi");
+  $data = mysqli_num_rows($tr);
+  while ($data = mysqli_fetch_array($tr)) {
+  $kodeTransaksi = $data['kodeTerbesar'];
+  // mengambil angka dari kode barang terbesar, menggunakan fungsi substr
+  // dan diubah ke integer dengan (int)
+  $urutan = (int) substr($kodeTransaksi, 3, 3);
+  // bilangan yang diambil ini ditambah 1 untuk menentukan nomor urut berikutnya
+  $urutan++;
+   
+  // membentuk kode barang baru
+  // perintah sprintf("%03s", $urutan); berguna untuk membuat string menjadi 3 karakter
+  // misalnya perintah sprintf("%03s", 15); maka akan menghasilkan '015'
+  // angka yang diambil tadi digabungkan dengan kode huruf yang kita inginkan, misalnya BRG 
+  $huruf = "TR-";
+  $kodeTransaksi = $huruf . sprintf("%03s", $urutan);
+  }
 ?>
 <!--
 =========================================================
@@ -109,10 +138,24 @@ if (isset($_POST['tambahtransaksi'])) {
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pemasukan_pengeluaran.php">
+              <a class="nav-link" data-toggle="collapse" href="#dua">
                 <i class="ni ni-bullet-list-67 text-primary"></i>
                 <span class="nav-link-text">Pemasukan dan Pengeluaran</span>
               </a>
+              <div class="collapse" id="dua">
+                <ul class="nav nav-collapse">
+                  <li class="nav-item">
+                    <a href="pemasukan.php" class="nav-link">
+                      <span class="nav-link-text">Data Pemasukan</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="pengeluaran.php" class="nav-link">
+                      <span class="nav-link-text">Data Pengeluaran</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#tables">
@@ -157,8 +200,8 @@ if (isset($_POST['tambahtransaksi'])) {
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanomset.php" class="nav-link">
-                      <span class="nav-link-text">Data Omset</span>
+                    <a href="laporankeuntungan.php" class="nav-link">
+                      <span class="nav-link-text">Data Keuntungan</span>
                     </a>
                   </li>
                 </ul>
@@ -251,16 +294,14 @@ if (isset($_POST['tambahtransaksi'])) {
           </ul>
           <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
             <li class="nav-item dropdown">
-              <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="media align-items-center">
                   <span class="avatar avatar-sm rounded-circle">
                     <img alt="Image placeholder" src="../assets/img/theme/team-4.jpg">
                   </span>
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
+                    <span class="mb-0 text-sm  font-weight-bold text-white"><?php echo $_SESSION["username"]; ?></span>
                   </div>
                 </div>
-              </a>
             </li>
           </ul>
         </div>
@@ -304,7 +345,7 @@ if (isset($_POST['tambahtransaksi'])) {
                             <td><?php echo $m['id_menu'];?></td>
                             <td><?php echo $m['nama_menu'];?></td>
                             <td><?php echo $m['porsi'];?></td>
-                            <td>Rp. <?php echo number_format($m['harga']);?></td>
+                            <td>Rp. <?php echo number_format($m['harga_jual']);?></td>
                             <td><?php echo $m['status_menu'];?></td>
                             <td>
                             <a href="keranjang.php?id_menu=<?php echo $m['id_menu']; ?>" class="btn btn-default"><i class="ni ni-basket"></i></a>
@@ -352,12 +393,12 @@ if (isset($_POST['tambahtransaksi'])) {
                                     <td><?php echo $k['id_menu']; ?></td>
                                     <td><?php echo $k['nama_menu']; ?></td>
                                     <td><?php echo $k['porsi']; ?></td>
-                                    <td><?php echo $k['harga']; ?></td>
+                                    <td><?php echo $k['harga_jual']; ?></td>
                                     <td><?php echo $k['jumlah']; ?></td>
                                     <td><?php echo $k['subtotal']; ?></td>
                                     <td>
-                                      <a href="ubahkeranjang.php?id_menu=<?php echo $k['id_menu']; ?>"><i class="far fa-edit text-white"></i></a> |
-                                      <a href="hapuskeranjang.php?id_menu=<?php echo $k['id_menu']; ?>"><i class="far fa-trash-alt text-white"></i></a>
+                                      <a href="ubahkeranjang.php?id_menu=<?php echo $k['id_menu']; ?>" onclick="return confirm('Ubah data keranjang?')"><i class="far fa-edit text-white"></i></a> |
+                                      <a href="hapuskeranjang.php?id_menu=<?php echo $k['id_menu']; ?>" onclick="return confirm('Hapus data keranjang?')"><i class="far fa-trash-alt text-white"></i></a>
                                     </td>
                                   </tr>
                                 <?php } ?>
@@ -372,19 +413,28 @@ if (isset($_POST['tambahtransaksi'])) {
                 <div class="card-body">
                   <form action="" method="POST">
                     <div class="pl-lg-2">
+
+                      <input type="hidden" class="form-control" name="id_transaksi" value="<?php echo $kodeTransaksi; ?>">
+                        <input type="hidden" id="tanggal" class="form-control" value="<?php echo date("Y-m-d");?>" name="tanggal">
+
                       <div class="row">
                         <div class="col-lg-3">
-          <input type="text" class="form-control" name="id_transaksi">
-
                           <div class="form-group">
                             <label class="form-control-label" for="nama_pelanggan">Atas Nama Pelanggan</label>
-                            <input type="text" id="nama_pelanggan" class="form-control" name="nama_pelanggan">
+                            <input type="text" id="nama_pelanggan" class="form-control" name="nama_pelanggan" autocomplete="off">
                           </div>
+                        
                           <div class="form-group mt--3">
-                            <label class="form-control-label" for="id_meja">Id meja</label>
-                            <input type="text" id="id_meja" class="form-control" name="id_meja">
+                            <label class="form-control-label" for="id_meja">Id meja</label><br>
+                            <select class="form-select p-2 pl-5 pr-5" id="id_meja" name="id_meja" aria-label="Default select example">
+                              <option selected>-- Meja Tersedia --</option>
+                              <?php foreach ($meja as $m) { ?>
+                              <option value="<?php echo $m['id_meja']; ?>"><?php echo $m['id_meja']; ?></option>
+                              <?php } ?>
+                            </select>
                           </div>
                         </div>
+
                         <div class="col-lg-3">
                           <div class="form-group">
                             <label class="form-control-label" for="total_bayar">Total bayar</label>
@@ -394,11 +444,8 @@ if (isset($_POST['tambahtransaksi'])) {
                             <label class="form-control-label" for="pajak">Pajak</label>
                             <input type="number" id="pajak" class="form-control" name="pajak">
                           </div>
-                          <div class="form-group mt--3">
-                            <label class="form-control-label" for="tanggal">Tanggal</label>
-                            <input type="date" id="tanggal" class="form-control" value="<?php echo date("Y-m-d");?>" name="tanggal">
-                          </div>
                         </div>
+
                         <div class="col-lg-3">
                           <div class="form-group">
                             <label class="form-control-label" for="tunai">Tunai(Rp)</label>
@@ -408,16 +455,18 @@ if (isset($_POST['tambahtransaksi'])) {
                             <label class="form-control-label" for="kembali">Kembali</label>
                             <input type="number" id="kembali" class="form-control" name="kembali">
                           </div>
-                          <div class="form-group mt--3">
+                        </div>
+
+                        <div class="col-lg-3">
+                          <div class="form-group">
                             <label class="form-control-label" for="id_pegawai">Id pegawai</label>
-                            <input type="text" id="id_pegawai" class="form-control" name="id_pegawai">
+                            <input type="text" id="id_pegawai" class="form-control" name="id_pegawai" autocomplete="off">
                           </div>
                         </div>
                       </div>
-
+                      <!-- <a href="cetakstruk.php"> -->
                       <button class="btn btn-default" name="tambahtransaksi" type="submit">Bayar</button>
-                        
-                      <button class="btn btn-primary">Cetak</button>
+                      <!-- </a> -->
                     </div>
                   </form>
                 </div>

@@ -1,7 +1,19 @@
 <?php 
+session_start();
+
+if (!isset($_SESSION["username"])) {
+  header("Location: login.php");
+  exit();
+}
+
   require 'functions.php';
   $transaksi = query("SELECT * FROM transaksi");
   $menu = query("SELECT * FROM menu");
+
+// ketika tombol cari diklik
+if (isset($_POST['caritransaksi'])) {
+  $transaksi = caritransaksi($_POST['keyword']);
+}
 ?>
 <!--
 =========================================================
@@ -99,10 +111,24 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pemasukan_pengeluaran.php">
+              <a class="nav-link" data-toggle="collapse" href="#dua">
                 <i class="ni ni-bullet-list-67 text-primary"></i>
                 <span class="nav-link-text">Pemasukan dan Pengeluaran</span>
               </a>
+              <div class="collapse" id="dua">
+                <ul class="nav nav-collapse">
+                  <li class="nav-item">
+                    <a href="pemasukan.php" class="nav-link">
+                      <span class="nav-link-text">Data Pemasukan</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="pengeluaran.php" class="nav-link">
+                      <span class="nav-link-text">Data Pengeluaran</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#tables">
@@ -147,8 +173,8 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanomset.php" class="nav-link">
-                      <span class="nav-link-text">Data Omset</span>
+                    <a href="laporankeuntungan.php" class="nav-link">
+                      <span class="nav-link-text">Data Keuntungan</span>
                     </a>
                   </li>
                 </ul>
@@ -168,13 +194,14 @@
       <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Search form -->
-          <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
+          <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main" action="" method="POST">
             <div class="form-group mb-0">
               <div class="input-group input-group-alternative input-group-merge">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-search"></i></span>
                 </div>
-                <input class="form-control" placeholder="Search" type="text">
+                <input class="keyword form-control" placeholder="Search" type="text" name="keyword" autocomplete="off">
+                <button type="submit" class="tombol-cari btn" name="caritransaksi"></button>
               </div>
             </div>
             <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
@@ -247,7 +274,7 @@
                     <img alt="Image placeholder" src="../assets/img/theme/team-4.jpg">
                   </span>
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
+                    <span class="mb-0 text-sm  font-weight-bold"><?php echo $_SESSION["username"]; ?></span>
                   </div>
                 </div>
               </a>
@@ -264,7 +291,7 @@
                   <span>Settings</span>
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="#!" class="dropdown-item">
+                <a href="logout.php" onclick="return confirm('Anda yakin akan keluar?')" class="dropdown-item">
                   <i class="ni ni-user-run"></i>
                   <span>Logout</span>
                 </a>
@@ -312,7 +339,7 @@
                             <td><?php echo $m['id_menu'];?></td>
                             <td><?php echo $m['nama_menu'];?></td>
                             <td><?php echo $m['porsi'];?></td>
-                            <td>Rp. <?php echo number_format($m['harga']);?></td>
+                            <td>Rp. <?php echo number_format($m['harga_jual']);?></td>
                             <td><?php echo $m['status_menu'];?></td>
                             <td>
                             <a href="keranjang.php?id_menu=<?php echo $m['id_menu']; ?>" class="btn btn-default"><i class="ni ni-basket"></i></a>
@@ -333,7 +360,7 @@
                   <div class="card-header bg-transparent border-0">
                     <h3 class="text-white mb-0">Data Transaksi</h3>
                   </div>
-                  <div class="table-responsive">
+                  <div class="hasil-cari table-responsive">
                     <table class="table align-items-center table-dark table-flush">
                       <thead class="thead-dark">
                         <tr>
@@ -343,6 +370,7 @@
                           <th scope="col" class="sort" data-sort="status">Tanggal</th>
                           <th scope="col" class="sort" data-sort="status">Nama Pelanggan</th>
                           <th scope="col" class="sort" data-sort="status">Total Bayar</th>
+                          <th scope="col" class="sort" data-sort="status">Aksi</th>
                         </tr>
                       </thead>
                       <tbody class="list">
@@ -355,6 +383,7 @@
                           <td><?php echo $trans['tanggal']; ?></td>
                           <td><?php echo $trans['nama_pelanggan']; ?></td>
                           <td>Rp. <?php echo number_format($trans['total_bayar']); ?></td>
+                          <td><a href="cetakstruk.php?id_transaksi=<?php echo $trans['id_transaksi']; ?>" class="btn btn-primary">Struk</a></td>
                         </tr>
                       <?php } ?>
                       </tbody>
@@ -394,6 +423,8 @@
   <script src="../assets/vendor/chart.js/dist/Chart.extension.js"></script>
   <!-- Argon JS -->
   <script src="../assets/js/argon.js?v=1.2.0"></script>
+  <!-- my js -->
+  <script src="../assets/js/script_transaksi.js"></script>
 </body>
 
 </html>

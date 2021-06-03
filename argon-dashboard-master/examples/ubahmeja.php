@@ -1,4 +1,11 @@
 <?php 
+session_start();
+
+if (!isset($_SESSION["username"])) {
+  header("Location: login.php");
+  exit();
+}
+
 require 'functions.php';
 
 $id = $_GET['id_meja'];
@@ -6,11 +13,12 @@ $meja = query("SELECT * FROM meja WHERE id_meja = '$id'");
 
 if (isset($_POST['ubahmeja'])) {
   if (ubahmeja($_POST) > 0) {
-    echo "<script> alert('berhasil');
+    echo "<script> 
+    alert('Data berhasil diubah!');
     document.location.href = 'meja.php';
     </script>";
   } else {
-    echo "<script> alert('gagl');
+    echo "<script> alert('gagal');
     document.location.href = 'beranda.php';
     </script>";
   }
@@ -113,10 +121,24 @@ if (isset($_POST['ubahmeja'])) {
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pemasukan_pengeluaran.php">
+              <a class="nav-link" data-toggle="collapse" href="#dua">
                 <i class="ni ni-bullet-list-67 text-primary"></i>
                 <span class="nav-link-text">Pemasukan dan Pengeluaran</span>
               </a>
+              <div class="collapse" id="dua">
+                <ul class="nav nav-collapse">
+                  <li class="nav-item">
+                    <a href="pemasukan.php" class="nav-link">
+                      <span class="nav-link-text">Data Pemasukan</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="pengeluaran.php" class="nav-link">
+                      <span class="nav-link-text">Data Pengeluaran</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#tables">
@@ -161,8 +183,8 @@ if (isset($_POST['ubahmeja'])) {
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanomset.php" class="nav-link">
-                      <span class="nav-link-text">Data Omset</span>
+                    <a href="laporankeuntungan.php" class="nav-link">
+                      <span class="nav-link-text">Data Keuntungan</span>
                     </a>
                   </li>
                 </ul>
@@ -255,16 +277,14 @@ if (isset($_POST['ubahmeja'])) {
           </ul>
           <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
             <li class="nav-item dropdown">
-              <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="media align-items-center">
                   <span class="avatar avatar-sm rounded-circle">
                     <img alt="Image placeholder" src="../assets/img/theme/team-4.jpg">
                   </span>
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
+                    <span class="mb-0 text-sm  font-weight-bold text-white"><?php echo $_SESSION["username"]; ?></span>
                   </div>
                 </div>
-              </a>
             </li>
           </ul>
         </div>
@@ -296,7 +316,7 @@ if (isset($_POST['ubahmeja'])) {
                     <?php foreach ($meja as $mj) { ?>
                       <div class="row">
                       	<!-- id meja -->
-                        <input type="hidden" id="id_meja" name="id_meja" class="form-control">
+                        <input type="hidden" id="id_meja" name="id_meja" class="form-control" value="<?php echo $mj['id_meja']; ?>">
 
                         <div class="col-lg-4">
                           <div class="form-group">

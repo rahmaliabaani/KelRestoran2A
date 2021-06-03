@@ -1,7 +1,18 @@
 <?php
+session_start();
+
+if (!isset($_SESSION["username"])) {
+  header("Location: login.php");
+  exit();
+}
+
 require 'functions.php';
   $transaksi = query("SELECT * FROM transaksi");
   $stok = query("SELECT * FROM stok");
+  $total_hasil = query("SELECT SUM(total_bayar) AS total_hasil FROM transaksi");
+  $jumlah_pegawai = query("SELECT COUNT(id_pegawai) AS jumlah_pegawai FROM pegawai");
+  $jumlah_transaksi = query("SELECT COUNT(id_transaksi) AS jumlah_transaksi FROM transaksi");
+  $keuntungan = query("SELECT SUM(menu.harga_jual-menu.harga_modal) AS totuntung FROM transaksi, detail, menu WHERE transaksi.id_transaksi=detail.id_transaksi AND detail.id_menu=menu.id_menu");
 ?>
 <!--
 =========================================================
@@ -97,10 +108,24 @@ require 'functions.php';
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pemasukan_pengeluaran.php">
+              <a class="nav-link" data-toggle="collapse" href="#dua">
                 <i class="ni ni-bullet-list-67 text-primary"></i>
                 <span class="nav-link-text">Pemasukan dan Pengeluaran</span>
               </a>
+              <div class="collapse" id="dua">
+                <ul class="nav nav-collapse">
+                  <li class="nav-item">
+                    <a href="pemasukan.php" class="nav-link">
+                      <span class="nav-link-text">Data Pemasukan</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="pengeluaran.php" class="nav-link">
+                      <span class="nav-link-text">Data Pengeluaran</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#tables">
@@ -145,8 +170,8 @@ require 'functions.php';
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanomset.php" class="nav-link">
-                      <span class="nav-link-text">Data Omset</span>
+                    <a href="laporankeuntungan.php" class="nav-link">
+                      <span class="nav-link-text">Data Keuntungan</span>
                     </a>
                   </li>
                 </ul>
@@ -165,20 +190,7 @@ require 'functions.php';
     <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
       <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <!-- Search form -->
-          <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
-            <div class="form-group mb-0">
-              <div class="input-group input-group-alternative input-group-merge">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-search"></i></span>
-                </div>
-                <input class="form-control" placeholder="Search" type="text">
-              </div>
-            </div>
-            <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </form>
+          
           <!-- Navbar links -->
           <ul class="navbar-nav align-items-center  ml-md-auto ">
             <li class="nav-item d-xl-none">
@@ -245,7 +257,7 @@ require 'functions.php';
                     <img alt="Image placeholder" src="../assets/img/theme/team-4.jpg">
                   </span>
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
+                    <span class="mb-0 text-sm  font-weight-bold"><?php echo $_SESSION["username"]; ?></span>
                   </div>
                 </div>
               </a>
@@ -262,7 +274,7 @@ require 'functions.php';
                   <span>Settings</span>
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="login.php" class="dropdown-item">
+                <a href="logout.php" onclick="return confirm('Anda yakin akan keluar?')" class="dropdown-item">
                   <i class="ni ni-user-run"></i>
                   <span>Logout</span>
                 </a>
@@ -289,10 +301,13 @@ require 'functions.php';
                 <!-- Card body -->
                 <div class="card-body">
                   <div class="row">
-                    <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">Total Hasil</h5>
-                      <span class="h2 font-weight-bold mb-0">3.000.000</span>
-                    </div>
+                    <?php foreach ($total_hasil as $toha) { ?>
+                      <div class="col">
+                        <h5 class="card-title text-uppercase text-muted mb-0">Total Hasil</h5>
+                        <span class="h2 font-weight-bold mb-0"><?php echo number_format($toha['total_hasil']); ?></span>
+                      </div>
+                    <?php } ?>
+                    
                     <div class="col-auto">
                       <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
                         <i class="ni ni-active-40"></i>
@@ -311,10 +326,12 @@ require 'functions.php';
                 <!-- Card body -->
                 <div class="card-body">
                   <div class="row">
+                    <?php foreach ($jumlah_pegawai as $jumpeg) { ?>
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">Pegawai</h5>
-                      <span class="h2 font-weight-bold mb-0">8</span>
+                      <span class="h2 font-weight-bold mb-0"><?php echo $jumpeg['jumlah_pegawai']; ?></span>
                     </div>
+                    <?php } ?>
                     <div class="col-auto">
                       <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
                         <i class="ni ni-chart-pie-35"></i>
@@ -333,10 +350,13 @@ require 'functions.php';
                 <!-- Card body -->
                 <div class="card-body">
                   <div class="row">
+                    <?php foreach ($keuntungan as $tu) { ?>
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">Keuntungan</h5>
-                      <span class="h2 font-weight-bold mb-0">1.000.000</span>
+                      <span class="h2 font-weight-bold mb-0"><?php echo number_format($tu['totuntung']); ?></span>
                     </div>
+                    <?php } ?>
+
                     <div class="col-auto">
                       <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
                         <i class="ni ni-money-coins"></i>
@@ -355,10 +375,12 @@ require 'functions.php';
                 <!-- Card body -->
                 <div class="card-body">
                   <div class="row">
+                    <?php foreach ($jumlah_transaksi as $jumsi) { ?>
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">Transaksi</h5>
-                      <span class="h2 font-weight-bold mb-0">10</span>
+                      <span class="h2 font-weight-bold mb-0"><?php echo $jumsi['jumlah_transaksi']; ?></span>
                     </div>
+                    <?php } ?>
                     <div class="col-auto">
                       <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
                         <i class="ni ni-chart-bar-32"></i>

@@ -1,3 +1,49 @@
+<?php 
+session_start();
+
+if (!isset($_SESSION["username"])) {
+  header("Location: login.php");
+  exit();
+}
+
+require 'functions.php';
+
+if (isset($_POST['tambahstok'])) {
+  if (tambahstok($_POST) > 0) {
+    echo "<script> 
+    alert('Data berhasil ditambah!'); 
+    document.location.href = 'stok.php';
+    </script>";
+  } else {
+    echo "<script> document.location.href = 'beranda.php';
+    </script>";
+  }
+  
+}
+
+$supplier = query("SELECT id_supplier FROM supplier");
+
+// kode otomatis meja
+  $conn = koneksi();
+  // mengambil data barang dengan kode paling besar
+  $st = mysqli_query($conn,"SELECT max(id_stok) as kodeTerbesar FROM stok");
+  $data = mysqli_num_rows($st);
+  while ($data = mysqli_fetch_array($st)) {
+  $kodeStok = $data['kodeTerbesar'];
+  // mengambil angka dari kode barang terbesar, menggunakan fungsi substr
+  // dan diubah ke integer dengan (int)
+  $urutan = (int) substr($kodeStok, 3, 3);
+  // bilangan yang diambil ini ditambah 1 untuk menentukan nomor urut berikutnya
+  $urutan++;
+   
+  // membentuk kode barang baru
+  // perintah sprintf("%03s", $urutan); berguna untuk membuat string menjadi 3 karakter
+  // misalnya perintah sprintf("%03s", 15); maka akan menghasilkan '015'
+  // angka yang diambil tadi digabungkan dengan kode huruf yang kita inginkan, misalnya BRG 
+  $huruf = "ST-";
+  $kodeStok = $huruf . sprintf("%03s", $urutan);
+  }
+?>
 <!--
 =========================================================
 * Argon Dashboard - v1.2.0
@@ -94,10 +140,24 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pemasukan_pengeluaran.php">
+              <a class="nav-link" data-toggle="collapse" href="#dua">
                 <i class="ni ni-bullet-list-67 text-primary"></i>
                 <span class="nav-link-text">Pemasukan dan Pengeluaran</span>
               </a>
+              <div class="collapse" id="dua">
+                <ul class="nav nav-collapse">
+                  <li class="nav-item">
+                    <a href="pemasukan.php" class="nav-link">
+                      <span class="nav-link-text">Data Pemasukan</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="pengeluaran.php" class="nav-link">
+                      <span class="nav-link-text">Data Pengeluaran</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#tables">
@@ -142,8 +202,8 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanomset.php" class="nav-link">
-                      <span class="nav-link-text">Data Omset</span>
+                    <a href="laporankeuntungan.php" class="nav-link">
+                      <span class="nav-link-text">Data Keuntungan</span>
                     </a>
                   </li>
                 </ul>
@@ -236,16 +296,14 @@
           </ul>
           <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
             <li class="nav-item dropdown">
-              <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="media align-items-center">
                   <span class="avatar avatar-sm rounded-circle">
                     <img alt="Image placeholder" src="../assets/img/theme/team-4.jpg">
                   </span>
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
+                    <span class="mb-0 text-sm  font-weight-bold text-white"><?php echo $_SESSION["username"]; ?></span>
                   </div>
                 </div>
-              </a>
             </li>
           </ul>
         </div>
@@ -272,30 +330,49 @@
                   </div>
                 </div>
                 <div class="card-body">
-                  <form action="stok.php">
+                  <form action="" method="POST">
                     <div class="pl-lg-2">
                       <div class="row">
                         <div class="col-lg-4">
                           <div class="form-group">
                             <label class="form-control-label" for="id">ID Stok</label>
-                            <input type="text" id="id" class="form-control">
+                            <input type="text" id="id" class="form-control" name="id_stok" value="<?php echo $kodeStok; ?>" readonly>
+                          </div>
+                        </div>
+                        <div class="col-lg-3">
+                          <div class="form-group">
+                            <label class="form-control-label" for="id_supplier">ID Supplier</label><br>
+                            <select class="form-control-select p-2 mt-1 pl-5 pr-5" aria-label="Default select example" id="id_supplier" name="id_supplier">
+                              <option selected>--ID Supplier--</option>
+                              <?php foreach ($supplier as $sp) { ?>
+                              <option value="<?php echo $sp['id_supplier']; ?>"><?php echo $sp['id_supplier']; ?></option>
+                              <?php } ?>
+                            </select>
                           </div>
                         </div>
                         <div class="col-lg-4">
-                          <div class="form-group">
+                          <div class="form-group ml-3">
                             <label class="form-control-label" for="nama">Nama</label>
-                            <input type="text" id="nama" class="form-control">
+                            <input type="text" id="nama" class="form-control" name="nama_bahan" required autocomplete="off">
                           </div>
                         </div>
+                      </div>
+                      <div class="row">
                         <div class="col-lg-4">
                           <div class="form-group">
                             <label class="form-control-label" for="jumlah">Jumlah</label>
-                            <input type="text" id="jumlah" class="form-control">
+                            <input type="text" id="jumlah" class="form-control" name="jumlah" required autocomplete="off">
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="satuan">Satuan</label>
+                            <input type="text" id="satuan" class="form-control" name="satuan" required autocomplete="off">
                           </div>
                         </div>
                       </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="submit" class="btn btn-primary" name="tambahstok">Simpan</button>
                   </form>
                     <a href="stok.php" class="batal">
                       <button type="batal" class="btn btn-default">Batal</button>

@@ -1,4 +1,11 @@
 <?php 
+session_start();
+
+if (!isset($_SESSION["username"])) {
+  header("Location: login.php");
+  exit();
+}
+
   require 'functions.php';
   $pemasukan = query("SELECT * FROM pemasukan");
 ?>
@@ -98,10 +105,24 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pemasukan_pengeluaran.php">
+              <a class="nav-link" data-toggle="collapse" href="#dua">
                 <i class="ni ni-bullet-list-67 text-primary"></i>
                 <span class="nav-link-text">Pemasukan dan Pengeluaran</span>
               </a>
+              <div class="collapse" id="dua">
+                <ul class="nav nav-collapse">
+                  <li class="nav-item">
+                    <a href="pemasukan.php" class="nav-link">
+                      <span class="nav-link-text">Data Pemasukan</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="pengeluaran.php" class="nav-link">
+                      <span class="nav-link-text">Data Pengeluaran</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li class="nav-item">
               <a class="nav-link active" data-toggle="collapse" href="#tables">
@@ -146,8 +167,8 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanomset.php" class="nav-link">
-                      <span class="nav-link-text">Data Omset</span>
+                    <a href="laporankeuntungan.php" class="nav-link">
+                      <span class="nav-link-text">Data Keuntungan</span>
                     </a>
                   </li>
                 </ul>
@@ -240,34 +261,14 @@
           </ul>
           <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
             <li class="nav-item dropdown">
-              <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="media align-items-center">
                   <span class="avatar avatar-sm rounded-circle">
                     <img alt="Image placeholder" src="../assets/img/theme/team-4.jpg">
                   </span>
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
+                    <span class="mb-0 text-sm  font-weight-bold text-white"><?php echo $_SESSION["username"]; ?></span>
                   </div>
                 </div>
-              </a>
-              <div class="dropdown-menu  dropdown-menu-right ">
-                <div class="dropdown-header noti-title">
-                  <h6 class="text-overflow m-0">Welcome!</h6>
-                </div>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-single-02"></i>
-                  <span>My profile</span>
-                </a>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-settings-gear-65"></i>
-                  <span>Settings</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-user-run"></i>
-                  <span>Logout</span>
-                </a>
-              </div>
             </li>
           </ul>
         </div>
@@ -285,77 +286,11 @@
           </div>
       <!-- cetak Pemasukan -->
           <!-- modal cetak -->
-        <a data-toggle="modal" data-target="#smallModal">
-          <button class="btn btn-primary mb-3"><i class="fas fa-print"></i> Cetak Laporan</button>
-        </a>
-          <div class="modal fade" id="smallModal" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-sm" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h4 class="modal-title" id="smallModalLabel">Laporan Pemasukan</h4>
-                </div>
-                <div class="modal-body">
-                  <form method="POST" action="cetakom.php">
-                    <label for="">Tanggal Awal</label>
-                    <div class="form-group">
-                      <div class="form-line">
-                        <input type="date" name="tgl_awal" class="form-control">
-                      </div>
-                    </div>
-
-                    <label for="">Tanggal Akhir</label>
-                    <div class="form-group">
-                      <div class="form-line">
-                        <input type="date" name="tgl_akhir" class="form-control">
-                      </div>
-                    </div>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="submit" class="btn btn-info">Cetak</button>
-                  <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- akhir modal -->
-          <!-- Dark table -->
-            <div class="row tabel-gelap">
-              <div class="col">
-                <div class="card bg-default shadow">
-                  <div class="card-header bg-transparent border-0">
-                    <h3 class="text-white mb-0">Data Pemasukan</h3>
-                  </div>
-                  <div class="table-responsive">
-                    <table class="table align-items-center table-dark table-flush">
-                      <thead class="thead-dark">
-                        <tr>
-                          <th scope="col" class="sort" data-sort="name">#</th>
-                          <th scope="col" class="sort" data-sort="status">Jenis</th>
-                          <th scope="col" class="sort" data-sort="completion">Keterangan</th>
-                          <th scope="col" class="sort" data-sort="completion">Tanggal</th>
-                          <th scope="col" class="sort" data-sort="completion">Jumlah</th>
-                        </tr>
-                      </thead>
-                      <tbody class="list">
-                        <?php $i = 1; ?>
-                        <?php foreach ($pemasukan as $masuk) { ?>
-                          <tr>
-                            <td><?php echo $masuk['id_pemasukan']; ?></td>
-                            <td><?php echo $masuk['jenis']; ?></td>
-                            <td><?php echo $masuk['keterangan']; ?></td>
-                            <td><?php echo $masuk['tanggal']; ?></td>
-                            <td>Rp. <?php echo number_format($masuk['jumlah']); ?></td>
-                          </tr>
-                        <?php } ?>
-                        <?php $i++ ?>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-      <!-- akhir tabel -->
+          <a href="cetakpemasukan.php">
+            <button class="btn btn-primary mb-3"><i class="fas fa-print"></i> Cetak Laporan</button>
+          </a>
+          <br>
+          <embed src="cetakpemasukan.php" type="application/pdf" width="600" height="400">
         </div>
       </div>
     </div>

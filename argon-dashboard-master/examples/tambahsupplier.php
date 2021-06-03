@@ -1,3 +1,47 @@
+<?php 
+session_start();
+
+if (!isset($_SESSION["username"])) {
+  header("Location: login.php");
+  exit();
+}
+
+require 'functions.php';
+
+if (isset($_POST['tambahsupplier'])) {
+  if (tambahsupplier($_POST) > 0) {
+    echo "<script> 
+    alert('Data berhasil ditambah!'); 
+    document.location.href = 'supplier.php';
+    </script>";
+  } else {
+    echo "<script> document.location.href = 'supplier.php';
+    </script>";
+  }
+  
+}
+
+// kode otomatis meja
+  $conn = koneksi();
+  // mengambil data barang dengan kode paling besar
+  $sp = mysqli_query($conn,"SELECT max(id_supplier) as kodeTerbesar FROM supplier");
+  $data = mysqli_num_rows($sp);
+  while ($data = mysqli_fetch_array($sp)) {
+  $kodeSupplier = $data['kodeTerbesar'];
+  // mengambil angka dari kode barang terbesar, menggunakan fungsi substr
+  // dan diubah ke integer dengan (int)
+  $urutan = (int) substr($kodeSupplier, 3, 3);
+  // bilangan yang diambil ini ditambah 1 untuk menentukan nomor urut berikutnya
+  $urutan++;
+   
+  // membentuk kode barang baru
+  // perintah sprintf("%03s", $urutan); berguna untuk membuat string menjadi 3 karakter
+  // misalnya perintah sprintf("%03s", 15); maka akan menghasilkan '015'
+  // angka yang diambil tadi digabungkan dengan kode huruf yang kita inginkan, misalnya BRG 
+  $huruf = "SP-";
+  $kodeSupplier = $huruf . sprintf("%03s", $urutan);
+  }
+?>
 <!--
 =========================================================
 * Argon Dashboard - v1.2.0
@@ -94,10 +138,24 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pemasukan_pengeluaran.php">
+              <a class="nav-link" data-toggle="collapse" href="#dua">
                 <i class="ni ni-bullet-list-67 text-primary"></i>
                 <span class="nav-link-text">Pemasukan dan Pengeluaran</span>
               </a>
+              <div class="collapse" id="dua">
+                <ul class="nav nav-collapse">
+                  <li class="nav-item">
+                    <a href="pemasukan.php" class="nav-link">
+                      <span class="nav-link-text">Data Pemasukan</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="pengeluaran.php" class="nav-link">
+                      <span class="nav-link-text">Data Pengeluaran</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#tables">
@@ -142,8 +200,8 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanomset.php" class="nav-link">
-                      <span class="nav-link-text">Data Omset</span>
+                    <a href="laporankeuntungan.php" class="nav-link">
+                      <span class="nav-link-text">Data Keuntungan</span>
                     </a>
                   </li>
                 </ul>
@@ -236,16 +294,14 @@
           </ul>
           <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
             <li class="nav-item dropdown">
-              <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="media align-items-center">
                   <span class="avatar avatar-sm rounded-circle">
                     <img alt="Image placeholder" src="../assets/img/theme/team-4.jpg">
                   </span>
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
+                    <span class="mb-0 text-sm  font-weight-bold text-white"><?php echo $_SESSION["username"]; ?></span>
                   </div>
                 </div>
-              </a>
             </li>
           </ul>
         </div>
@@ -261,61 +317,61 @@
               <h6 class="h2 text-dark d-inline-block mb-0">Supplier</h6>
             </div>
           </div>
-          <!-- transaksi -->
-            <div class="col-xl-10 order-xl-1 ml--3">
+           <!-- transaksi -->
+           <div class="col-xl-10 order-xl-1 ml--3">
               <div class="card">
                 <div class="card-header">
                   <div class="row align-items-center">
                     <div class="col-10">
-                      <h3 class="mb-0">Data Supplier</h3>
+                      <h3 class="mb-0">Tambah Supplier</h3>
                     </div>
                   </div>
                 </div>
                 <div class="card-body">
-                  <form action="supplier.php">
+                  <form action="" method="POST">
                     <div class="pl-lg-2">
                       <div class="row">
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <label class="form-control-label" for="id">ID_supplier</label>
-                            <input type="text" id="id" class="form-control">
+                            <label class="form-control-label" for="id_supplier">ID Supplier</label>
+                            <input type="text" id="id_supplier" name="id_supplier" class="form-control" value="<?php echo $kodeSupplier; ?>" readonly>
                           </div>
                         </div>
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <label class="form-control-label" for="nama">Nama_supplier</label>
-                            <input type="text" id="nama" class="form-control">
+                            <label class="form-control-label" for="nama">Nama</label>
+                            <input type="text" id="nama" name="nama" class="form-control" required autocomplete="off">
                           </div>
                         </div>
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <label class="form-control-label" for="alamat">Alamat</label>
-                            <textarea rows="1" class="form-control" id="alamat"></textarea>
+                            <label class="form-control-label" for="jenis">Jenis</label>
+                            <input type="text" id="jenis" name="jenis" class="form-control" required autocomplete="off">
                           </div>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <label class="form-control-label" for="notelp">No_Telpon</label>
-                            <input type="number" id="notelp" class="form-control">
+                            <label class="form-control-label" for="alamat">Alamat</label>
+                            <input type="text" id="alamat" name="alamat" class="form-control" required autocomplete="off">
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="no_telepon">No Telepon</label>
+                            <input type="number" id="no_telepon" name="no_telepon" class="form-control" required autocomplete="off">
                           </div>
                         </div>
                         <div class="col-lg-4">
                           <div class="form-group">
                             <label class="form-control-label" for="email">Email</label>
-                            <input type="email" id="email" class="form-control">
-                          </div>
-                        </div>
-                        <div class="col-lg-4">
-                          <div class="form-group">
-                            <label class="form-control-label" for="jenissupplier">Jenis Supplier</label>
-                            <input type="number" id="jenissupplier" class="form-control">
+                            <input type="email" id="email" name="email" class="form-control" required autocomplete="off">
                           </div>
                         </div>
                       </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="submit" class="btn btn-primary" name="tambahsupplier">Simpan</button>
                   </form>
                     <a href="supplier.php" class="batal">
                       <button type="batal" class="btn btn-default">Batal</button>
@@ -323,6 +379,7 @@
                 </div>
               </div>
             </div>
+            <!-- akhir -->
             <!-- akhir -->
         </div>
       </div>

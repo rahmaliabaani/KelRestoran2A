@@ -1,3 +1,48 @@
+<?php 
+session_start();
+
+if (!isset($_SESSION["username"])) {
+  header("Location: login.php");
+  exit();
+}
+
+require 'functions.php';
+
+if (isset($_POST['tambahmenu'])) {
+  if (tambahmenu($_POST) > 0) {
+    echo "<script> 
+    alert('Data berhasil ditambah!'); 
+    document.location.href = 'menu.php';
+    </script>";
+  } else {
+    echo "<script> document.location.href = 'beranda.php';
+    </script>";
+  }
+  
+}
+
+// kode otomatis meja
+  $conn = koneksi();
+  // mengambil data barang dengan kode paling besar
+  $mn = mysqli_query($conn,"SELECT max(id_menu) as kodeTerbesar FROM menu");
+  $data = mysqli_num_rows($mn);
+  while ($data = mysqli_fetch_array($mn)) {
+  $kodeMenu = $data['kodeTerbesar'];
+  // mengambil angka dari kode barang terbesar, menggunakan fungsi substr
+  // dan diubah ke integer dengan (int)
+  $urutan = (int) substr($kodeMenu, 2, 3);
+  // bilangan yang diambil ini ditambah 1 untuk menentukan nomor urut berikutnya
+  $urutan++;
+   
+  // membentuk kode barang baru
+  // perintah sprintf("%03s", $urutan); berguna untuk membuat string menjadi 3 karakter
+  // misalnya perintah sprintf("%03s", 15); maka akan menghasilkan '015'
+  // angka yang diambil tadi digabungkan dengan kode huruf yang kita inginkan, misalnya BRG 
+  $huruf = "M-";
+  $kodeMenu = $huruf . sprintf("%03s", $urutan);
+  }
+?>
+
 <!--
 =========================================================
 * Argon Dashboard - v1.2.0
@@ -94,10 +139,24 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pemasukan_pengeluaran.php">
+              <a class="nav-link" data-toggle="collapse" href="#dua">
                 <i class="ni ni-bullet-list-67 text-primary"></i>
                 <span class="nav-link-text">Pemasukan dan Pengeluaran</span>
               </a>
+              <div class="collapse" id="dua">
+                <ul class="nav nav-collapse">
+                  <li class="nav-item">
+                    <a href="pemasukan.php" class="nav-link">
+                      <span class="nav-link-text">Data Pemasukan</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="pengeluaran.php" class="nav-link">
+                      <span class="nav-link-text">Data Pengeluaran</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#tables">
@@ -142,8 +201,8 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanomset.php" class="nav-link">
-                      <span class="nav-link-text">Data Omset</span>
+                    <a href="laporankeuntungan.php" class="nav-link">
+                      <span class="nav-link-text">Data Keuntungan</span>
                     </a>
                   </li>
                 </ul>
@@ -236,16 +295,14 @@
           </ul>
           <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
             <li class="nav-item dropdown">
-              <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="media align-items-center">
                   <span class="avatar avatar-sm rounded-circle">
                     <img alt="Image placeholder" src="../assets/img/theme/team-4.jpg">
                   </span>
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
+                    <span class="mb-0 text-sm  font-weight-bold text-white"><?php echo $_SESSION["username"]; ?></span>
                   </div>
                 </div>
-              </a>
             </li>
           </ul>
         </div>
@@ -272,50 +329,62 @@
                   </div>
                 </div>
                 <div class="card-body">
-                  <form action="menu.php">
+                  <form action="" method="POST" enctype="multipart/form-data">
                     <div class="pl-lg-2">
                       <div class="row">
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <label class="form-control-label" for="id">ID Menu</label>
-                            <input type="text" id="id" class="form-control">
+                            <label class="form-control-label" for="id_menu">ID Menu</label>
+                            <input type="text" id="id_menu" name="id_menu" class="form-control" value="<?php echo $kodeMenu; ?>" readonly>
                           </div>
                         </div>
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <label class="form-control-label" for="nama">Nama Menu</label>
-                            <input type="text" id="nama" class="form-control">
+                            <label class="form-control-label" for="nama_menu">Nama Menu</label>
+                            <input type="text" id="nama_menu" name="nama_menu" class="form-control" required autocomplete="off">
                           </div>
                         </div>
                         <div class="col-lg-4">
                           <div class="form-group">
                             <label class="form-control-label" for="porsi">Porsi</label>
-                            <input type="number" id="porsi" class="form-control">
+                            <input type="number" id="porsi" name="porsi" class="form-control" required>
                           </div>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <label class="form-control-label" for="harga">Harga</label>
-                            <input type="number" id="harga" class="form-control">
+                            <label class="form-control-label" for="harga_jual">Harga jual</label>
+                            <input type="number" id="harga_jual" name="harga_jual" class="form-control" required>
                           </div>
                         </div>
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <label class="form-control-label" for="status">Status menu</label>
-                            <input type="text" id="status" class="form-control">
+                            <label class="form-control-label" for="harga_modal">Harga modal</label>
+                            <input type="number" id="harga_modal" name="harga_modal" class="form-control" required>
                           </div>
                         </div>
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <label class="form-control-label" for="foto">Foto</label>
-                            <input type="text" id="foto" class="form-control">
+                            <label class="form-control-label" for="status_menu">Status menu</label>
+                            <input type="text" id="status_menu" name="status_menu" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="estimasi_waktu_buat">Estimasi Waktu Buat</label>
+                            <input type="time" id="estimasi_waktu_buat" name="estimasi_waktu_buat" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="gambar">Gambar</label>
+                            <input type="file" id="gambar" name="gambar" class="form-control" required>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="submit" class="btn btn-primary" name="tambahmenu">Simpan</button>
                   </form>
                     <a href="menu.php" class="batal">
                       <button type="batal" class="btn btn-default">Batal</button>

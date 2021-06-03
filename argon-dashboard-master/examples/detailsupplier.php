@@ -1,4 +1,11 @@
 <?php 
+session_start();
+
+if (!isset($_SESSION["username"])) {
+  header("Location: login.php");
+  exit();
+}
+
   require 'functions.php';
   $id = $_GET['id_supplier'];
   $sup = query("SELECT * FROM supplier WHERE id_supplier = '$id'")[0];
@@ -100,10 +107,24 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pemasukan_pengeluaran.php">
+              <a class="nav-link" data-toggle="collapse" href="#dua">
                 <i class="ni ni-bullet-list-67 text-primary"></i>
                 <span class="nav-link-text">Pemasukan dan Pengeluaran</span>
               </a>
+              <div class="collapse" id="dua">
+                <ul class="nav nav-collapse">
+                  <li class="nav-item">
+                    <a href="pemasukan.php" class="nav-link">
+                      <span class="nav-link-text">Data Pemasukan</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="pengeluaran.php" class="nav-link">
+                      <span class="nav-link-text">Data Pengeluaran</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#tables">
@@ -148,8 +169,8 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanomset.php" class="nav-link">
-                      <span class="nav-link-text">Data Omset</span>
+                    <a href="laporankeuntungan.php" class="nav-link">
+                      <span class="nav-link-text">Data Keuntungan</span>
                     </a>
                   </li>
                 </ul>
@@ -242,16 +263,14 @@
           </ul>
           <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
             <li class="nav-item dropdown">
-              <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="media align-items-center">
                   <span class="avatar avatar-sm rounded-circle">
                     <img alt="Image placeholder" src="../assets/img/theme/team-4.jpg">
                   </span>
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
+                    <span class="mb-0 text-sm  font-weight-bold text-white"><?php echo $_SESSION["username"]; ?></span>
                   </div>
                 </div>
-              </a>
             </li>
           </ul>
         </div>
@@ -280,19 +299,19 @@
             <div class="card-body pt-0 mt-3">
               <div class="text-center">
                 <div class="h4 font-weight-300">
-                  <?php echo $sup['id_supplier']; ?>
+                  ID Supplier : <?php echo $sup['id_supplier']; ?>
                 </div>
                 <div class="h4 font-weight-300">
-                  <?php echo $sup['nama']; ?>
+                  Nama Supplier : <?php echo $sup['nama']; ?>
                 </div>
                 <div class="h4 font-weight-300">
-                  <?php echo $sup['jenis']; ?>
+                  Jenis Supplier : <?php echo $sup['jenis']; ?>
                 </div>
                 <div class="h4 font-weight-300">
-                  <?php echo $sup['alamat']; ?>
+                  Alamat : <?php echo $sup['alamat']; ?>
                 </div>
                 <div class="h4 font-weight-300">
-                  <?php echo $sup['no_telepon']; ?>
+                  No telepon :<?php echo $sup['no_telepon']; ?>
                 </div>
                 <div class="h4 font-weight-300">
                   <?php echo $sup['email']; ?>

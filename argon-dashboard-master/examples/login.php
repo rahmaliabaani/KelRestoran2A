@@ -2,24 +2,56 @@
 session_start();
 require 'functions.php';
 
+// cek cookie
+if (isset($_COOKIE['username']) && isset($_COOKIE['hash'])) {
+  $username = $_COOKIE['username'];
+  $hash = $_COOKIE['hash'];
+
+  // ambil username berdasarkan id
+  $result = mysqli_query(koneksi(), "SELECT * FROM user WHERE username = '$username'");
+  $row = mysqli_fetch_assoc($result);
+
+  // cek cookie dan username
+  if ($hash === hash('sha256', $row['id_pegawai'], false)) {
+    $_SESSION['username'] = $row['username'];
+    header("Location: beranda.php");
+    exit();
+  }
+}
+
+
+// melakukan pengecekan apakah user sudah melakukan login jika sudah redirect ke halaman admin
+if (isset($_SESSION['username'])) {
+  header("Location: beranda.php");
+  exit();
+}
+
 // login
 if (isset($_POST['submit'])) {
   $username = $_POST['username'];
   $password = $_POST['password'];
-  $cek_user = mysqli_query(koneksi(), "SELECT * FROM user WHERE username = '$username' AND password = '$password'");
+  $cek_user = mysqli_query(koneksi(), "SELECT * FROM user WHERE username = '$username'");
   // mencocokan username dan password
   if (mysqli_num_rows($cek_user) > 0) {
     $row = mysqli_fetch_assoc($cek_user);
-    if ($password == $row['password']) {
+    if (password_verify($password, $row['password'])) {
       $_SESSION['username'] = $_POST['username'];
-      $_SESSION['hash'] = $row['id_pegawai'];
-    }
-    if ($row['id_pegawai'] == $_SESSION['hash']) {
-      header("Location: beranda.php");
+      $_SESSION['hash'] = hash('sha256', $row['id_pegawai'], false);
+
+      // jika remember me dicentang
+      if (isset($_POST['remember'])) {
+        setcookie('username', $row['username'], time() + 60 * 60 * 24);
+        $hash = hash('sha256', $row['id_pegawai']);
+        setcookie('hash', $hash, time() + 60 * 60 * 24);
+      }
+    
+      if (hash('sha256', $row['id']) == $_SESSION['hash']) {
+        header("Location: beranda.php");
+        die();
+      }
+      header("Location: login.php");
       die();
     }
-    header("Location: login.php");
-    die();
   }
   $error = true;
 }
@@ -81,7 +113,7 @@ if (isset($_POST['submit'])) {
             </div>
           </div>
         </div>
-        <ul class="navbar-nav mr-auto">
+        <!-- <ul class="navbar-nav mr-auto">
           <li class="nav-item">
             <a href="login.php" class="nav-link">
               <span class="nav-link-inner--text">Login</span>
@@ -92,7 +124,7 @@ if (isset($_POST['submit'])) {
               <span class="nav-link-inner--text">Register</span>
             </a>
           </li>
-        </ul>
+        </ul> -->
         <hr class="d-lg-none" />
         <ul class="navbar-nav align-items-lg-center ml-lg-auto">
           <li class="nav-item">
@@ -179,7 +211,7 @@ if (isset($_POST['submit'])) {
 		              <a href="#" class="text-light mr-5"><small>Lupa Password?</small></a>
 		            </div>
 		            <div class="col-6">
-		              <a href="#" class="text-light mr--4"><small>Buat Akun Baru</small></a>
+		              <a href="register.php" class="text-light mr--4"><small>Buat Akun Baru</small></a>
 		            </div>
 		          </div>
 		        </div>
@@ -201,7 +233,11 @@ if (isset($_POST['submit'])) {
   <script src="../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
   <!-- Argon JS -->
   <script src="../assets/js/argon.js?v=1.2.0"></script>
-  <script src="../assets/js/script.js"></script>
+  <!-- my js -->
+  <script>
+    $(".alert-message").alert();
+    window.setTimeout(function() { $(".alert-message").alert('close'); }, 2000);
+  </script>
 </body>
 
 </html>

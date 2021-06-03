@@ -1,6 +1,18 @@
 <?php 
+session_start();
+
+if (!isset($_SESSION["username"])) {
+  header("Location: login.php");
+  exit();
+}
+
   require 'functions.php';
   $stok = query("SELECT * FROM stok");
+
+// ketika tombol cari diklik
+if (isset($_POST['caristok'])) {
+  $stok = caristok($_POST['keyword']);
+}
 ?>
 
 <!--
@@ -99,10 +111,24 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pemasukan_pengeluaran.php">
+              <a class="nav-link" data-toggle="collapse" href="#dua">
                 <i class="ni ni-bullet-list-67 text-primary"></i>
                 <span class="nav-link-text">Pemasukan dan Pengeluaran</span>
               </a>
+              <div class="collapse" id="dua">
+                <ul class="nav nav-collapse">
+                  <li class="nav-item">
+                    <a href="pemasukan.php" class="nav-link">
+                      <span class="nav-link-text">Data Pemasukan</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="pengeluaran.php" class="nav-link">
+                      <span class="nav-link-text">Data Pengeluaran</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#tables">
@@ -147,8 +173,8 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanomset.php" class="nav-link">
-                      <span class="nav-link-text">Data Omset</span>
+                    <a href="laporankeuntungan.php" class="nav-link">
+                      <span class="nav-link-text">Data Keuntungan</span>
                     </a>
                   </li>
                 </ul>
@@ -168,13 +194,14 @@
       <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Search form -->
-          <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
+          <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main" action="" method="POST">
             <div class="form-group mb-0">
               <div class="input-group input-group-alternative input-group-merge">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-search"></i></span>
                 </div>
-                <input class="form-control" placeholder="Search" type="text">
+                <input class="keyword form-control" placeholder="Search" type="text" name="keyword" autocomplete="off">
+                <button type="submit" class="tombol-cari btn" name="caristok"></button>
               </div>
             </div>
             <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
@@ -247,7 +274,7 @@
                     <img alt="Image placeholder" src="../assets/img/theme/team-4.jpg">
                   </span>
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
+                    <span class="mb-0 text-sm  font-weight-bold"><?php echo $_SESSION["username"]; ?></span>
                   </div>
                 </div>
               </a>
@@ -264,7 +291,7 @@
                   <span>Settings</span>
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="#!" class="dropdown-item">
+                <a href="logout.php" onclick="return confirm('Anda yakin akan keluar?')" class="dropdown-item">
                   <i class="ni ni-user-run"></i>
                   <span>Logout</span>
                 </a>
@@ -292,12 +319,13 @@
                   <div class="card-header bg-transparent border-0">
                     <h3 class="text-white mb-0">Data Stok Bahan</h3>
                   </div> 
-                  <div class="table-responsive">
+                  <div class="hasil-cari table-responsive">
                     <table class="table align-items-center table-dark table-flush">
                       <thead class="thead-dark">
                         <tr>
                           <th scope="col" class="sort" data-sort="name">#</th>
-                          <th scope="col" class="sort" data-sort="name">ID Bahan</th>
+                          <th scope="col" class="sort" data-sort="name">ID Stok</th>
+                          <th scope="col" class="sort" data-sort="name">ID Supplier</th>
                           <th scope="col" class="sort" data-sort="status">Nama</th>
                           <th scope="col" class="sort" data-sort="status">Jumlah</th>
                           <th scope="col" class="sort" data-sort="status">Satuan</th>
@@ -310,12 +338,13 @@
                           <tr>
                             <td><?php echo $i++; ?></td>
                             <td><?php echo $s['id_stok']; ?></td>
+                            <td><?php echo $s['id_supplier']; ?></td>
                             <td><?php echo $s['nama_bahan']; ?></td>
                             <td><?php echo $s['jumlah']; ?></td>
                             <td><?php echo $s['satuan']; ?></td>
                             <td>
-                            <a href=""><i class="far fa-edit text-white"></i></a> |
-                            <a href=""><i class="far fa-trash-alt text-white"></i></a>
+                            <a href="ubahstok.php?id_stok=<?php echo $s['id_stok']; ?>" onclick="return confirm('Ubah data stok?')"><i class="far fa-edit text-white"></i></a> |
+                            <a href="hapusstok.php?id_stok=<?php echo $s['id_stok']; ?>" onclick="return confirm('Hapus data stok?')"><i class="far fa-trash-alt text-white"></i></a>
                             </td>
                           </tr>
                         <?php } ?>
@@ -354,6 +383,8 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTTfWur0PDbZWPr7Pmq8K3jiDp0_xUziI"></script>
   <!-- Argon JS -->
   <script src="../assets/js/argon.js?v=1.2.0"></script>
+  <!-- my js -->
+  <script src="../assets/js/script_stok.js"></script>
 </body>
 
 </html>

@@ -1,4 +1,11 @@
 <?php 
+session_start();
+
+if (!isset($_SESSION["username"])) {
+  header("Location: login.php");
+  exit();
+}
+
 require 'functions.php';
 
 $id = $_GET['id_menu'];
@@ -15,15 +22,26 @@ if (isset($_POST['tambahkeranjang'])) {
   
 }
 
-// mengambil data yg kodenya paling besar
-// $trans = query("SELECT max(id_transaksi) AS idTerbesar FROM transaksi");
-// $data = mysqli_fetch_array($trans);
-// $idtransaksi = $data['idTerbesar'];
-// $urutan = (int) substr($idtransaksi, 3, 3);
-// $urutan++;
-// $huruf = "TR-";
-// $idtransaksi = $huruf . sprintf("%03s", $urutan);
-
+// kode otomatis meja
+  $conn = koneksi();
+  // mengambil data barang dengan kode paling besar
+  $tr = mysqli_query($conn,"SELECT max(id_transaksi) as kodeTerbesar FROM transaksi");
+  $data = mysqli_num_rows($tr);
+  while ($data = mysqli_fetch_array($tr)) {
+  $kodeTransaksi = $data['kodeTerbesar'];
+  // mengambil angka dari kode barang terbesar, menggunakan fungsi substr
+  // dan diubah ke integer dengan (int)
+  $urutan = (int) substr($kodeTransaksi, 3, 3);
+  // bilangan yang diambil ini ditambah 1 untuk menentukan nomor urut berikutnya
+  $urutan++;
+   
+  // membentuk kode barang baru
+  // perintah sprintf("%03s", $urutan); berguna untuk membuat string menjadi 3 karakter
+  // misalnya perintah sprintf("%03s", 15); maka akan menghasilkan '015'
+  // angka yang diambil tadi digabungkan dengan kode huruf yang kita inginkan, misalnya BRG 
+  $huruf = "TR-";
+  $kodeTransaksi = $huruf . sprintf("%03s", $urutan);
+  }
 ?>
 <!--
 =========================================================
@@ -119,10 +137,24 @@ if (isset($_POST['tambahkeranjang'])) {
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pemasukan_pengeluaran.php">
+              <a class="nav-link" data-toggle="collapse" href="#dua">
                 <i class="ni ni-bullet-list-67 text-primary"></i>
                 <span class="nav-link-text">Pemasukan dan Pengeluaran</span>
               </a>
+              <div class="collapse" id="dua">
+                <ul class="nav nav-collapse">
+                  <li class="nav-item">
+                    <a href="pemasukan.php" class="nav-link">
+                      <span class="nav-link-text">Data Pemasukan</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="pengeluaran.php" class="nav-link">
+                      <span class="nav-link-text">Data Pengeluaran</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#tables">
@@ -167,8 +199,8 @@ if (isset($_POST['tambahkeranjang'])) {
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="laporanomset.php" class="nav-link">
-                      <span class="nav-link-text">Data Omset</span>
+                    <a href="laporankeuntungan.php" class="nav-link">
+                      <span class="nav-link-text">Data Keuntungan</span>
                     </a>
                   </li>
                 </ul>
@@ -261,16 +293,14 @@ if (isset($_POST['tambahkeranjang'])) {
           </ul>
           <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
             <li class="nav-item dropdown">
-              <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="media align-items-center">
                   <span class="avatar avatar-sm rounded-circle">
                     <img alt="Image placeholder" src="../assets/img/theme/team-4.jpg">
                   </span>
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
+                    <span class="mb-0 text-sm  font-weight-bold text-white"><?php echo $_SESSION["username"]; ?></span>
                   </div>
                 </div>
-              </a>
             </li>
           </ul>
         </div>
@@ -301,8 +331,8 @@ if (isset($_POST['tambahkeranjang'])) {
                     <div class="pl-lg-2">
                       <?php foreach ($menu as $m) { ?>
                         <!-- id transaksi -->
-                        <label class="form-control-label" for="id_transaksi">ID transaksi</label>
-                        <input type="text" id="id_transaksi" class="form-control" name="id_transaksi">
+                        <!-- <label class="form-control-label" for="id_transaksi">ID transaksi</label> -->
+                        <input type="hidden" id="id_transaksi" class="form-control" name="id_transaksi" value="<?php echo $kodeTransaksi; ?>">
                       
                       <div class="row">
                         <div class="col-lg-4">
@@ -331,14 +361,14 @@ if (isset($_POST['tambahkeranjang'])) {
                       <div class="row">
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <label class="form-control-label" for="harga">Harga</label>
-                            <input type="number" id="harga" class="form-control"  name="harga" value="<?php echo $m['harga']; ?>" readonly>
+                            <label class="form-control-label" for="harga_jual">Harga</label>
+                            <input type="number" id="harga_jual" class="form-control"  name="harga_jual" value="<?php echo $m['harga_jual']; ?>" readonly>
                           </div>
                         </div>
                         <div class="col-lg-4">
                           <div class="form-group">
                             <label class="form-control-label" for="jumlah">Jumlah</label>
-                            <input type="number" id="jumlah" class="form-control" name="jumlah" >
+                            <input type="number" id="jumlah" class="form-control" name="jumlah" autocomplete="off">
                           </div>
                         </div>
                         <div class="col-lg-4">
